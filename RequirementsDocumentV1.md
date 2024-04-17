@@ -41,7 +41,10 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Stakeholder name | Description |
 | :--------------: | :---------: |
-| Stakeholder x..  |             |
+| Customer         | Application user that intends on buying from the store by selecting the products, adding them to the cart and checkout the cart.|
+| Manager          | Application user responsible for managing the state of the App (list of products, product availability) and registering the sales in the app. |
+| Seller at Point Of Sale (POS)| Person responsible for managing the sale at the POS, by handing the bought items to the customer and receiving the payment. Can also be the manager, but not necessarily. |
+| Store Owner      | Owner of the electronics store who purchases the EZElectronics software in order to have a dedicated website facilitating its sales.|
 
 # Context Diagram and interfaces
 
@@ -77,11 +80,32 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 \<they match to high level use cases>
 
-|  ID   | Description |
-| :---: | :---------: |
-|  FR1  |             |
-|  FR2  |             |
-| FRx.. |             |
+|  ID       | Description |
+| :---:     | :---------: |
+|  FR1      | Manage Users |
+|  FR1.1    | Add User (Unclear who can add an user and in what context, as no authentication is required to call UserRoutes.router.post, and both manager and customer users can be crated) |
+|  FR2      | Manage Products |
+|  FR2.1    | Register new products |
+|  FR2.2    | Register the arrival of a set of previously registered products |
+|  FR2.3    | Register the sale of a product |
+|  FR2.4    | See a list of products |
+|  FR2.4.1  | This list can be filtered by: sold/not sold, a specific product, a specific category |
+|  FR2.5    | Delete a product |
+|  FR3      | Manage Carts |
+|  FR3.1    | Add a product to its own cart |
+|  FR3.1.1  | A product can not be added to a cart cart twice |
+|  FR3.1.2  | A product can not be added to the cart if ti is sold out |
+|  FR3.2    | Remove a product from it’s own cart |
+|  FR3.2.1  | Products can not be removed from the cart if it has already been paid for |
+|  FR3.3    | Check out the cart |
+|  FR3.4    | Customer can see it’s own cart history from last purchases |
+|  FR3.4.1  | Only previous carts that have been paid for can be found |
+|  FR4      | Authorization and Authentication |
+|  FR4.1    | Log in and Log out |
+|  FR4.2    | Allow customer functionalities only for logged in customer |
+|  FR4.2.1  | Customer functionalities are the ones described in FR3.X |
+|  FR4.3    | Allow manager functionalities only for logged in managers |
+| FR4.3.1   | Manager functionalities are the ones are described in FR2.X |
 
 ## Non Functional Requirements
 
