@@ -66,11 +66,17 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 # Stories and personas
 
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
+### Persona 1:
+Maria, female, 35 years old, store manager of an electronic store
+Story: Maria aims to streamline the process of managing her store’s product and making them available online for customers
 
-\<Persona is-an-instance-of actor>
+### Persona 2:
+John, male, 40 years old, manager of multiple stores
+Story: John manages multiple electronic stores across the city and needs a centralized system to oversee all the stores
 
-\<stories will be formalized later as scenarios in use cases>
+### Persona 3:
+Anita, 25 years old, customer
+Story: Anita is a regular customer of an electronic store and prefers to shop online from her smartphone due to her busy schedule
 
 # Functional and non functional requirements
 
@@ -113,10 +119,11 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   ID    | Type (efficiency, reliability, ..) | Description | Refers to |
 | :-----: | :--------------------------------: | :---------: | :-------: |
-|  NFR1   |                                    |             |           |
-|  NFR2   |                                    |             |           |
-|  NFR3   |                                    |             |           |
-| NFRx .. |                                    |             |           |
+|  NFR1   |    Usability                                |      Web application should be intuitive and user-friendly, requiring no specialized training for customers already familiar with e-commerce apps and websites. Managers should also find it straightforward to use it for different functions.       |    All FR       |
+|  NFR2   |    Efficiency                                |      All functions on the app must be completed in < 0.1 s, excluding internet connection time       |  All FR         |
+|  NFR3   |     Reliability                               |  No more than one defect per year per user, server must be online and operational 99% of the time      |    All FR       |
+| NFR4 |    Security                              | Data security and sharing between users and stores must be handled securely and in compliance with privacy regulations. Access should be restricted to authorized managers.        |    FR4       |
+| NFR5 |    Portability                              | Compatibility with most common browser (Chrome, Safari, Edge…)        |    All FR      |
 
 # Use case diagram and use cases
 
