@@ -51,20 +51,22 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 # Context Diagram and interfaces
 
 ## Context Diagram
+actor "User"
+actor "Customer"
+actor "Manager"
 
-\<Define here Context diagram using UML use case diagram>
 
-\<actors are a subset of stakeholders>
+![Context_Diagram](./images/UseCaseDiagramV1.jpg)
 
 ## Interfaces
 
-\<describe here each interface in the context diagram>
-
-\<GUIs will be described graphically in a separate document>
 
 |   Actor   | Logical Interface | Physical Interface |
-| :-------: | :---------------: | :----------------: |
+| :-------: | :---------------: | :----------------: 
 | Actor x.. |                   |                    |
+|User |      GUI    |   Smartphone or PC   | 
+|Customer  | GUI(to be defined - key function, create a personal account, show stores and their products, purchases)  |    Smartphone or PC      |
+|Manager  | GUI (interface for view, add products and control usr,manage payments)|    smartphone or PC    |
 
 # Stories and personas
 
