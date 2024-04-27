@@ -2,11 +2,13 @@
 
 Date:
 
-Version: V1 - description of EZElectronics in CURRENT form (as received by teachers)
+Version: V1.2 - description of EZElectronics in CURRENT form (as received by teachers)
 
 | Version number | Change |
 | :------------: | :----: |
-|                |        |
+|  1.1           | Functional Requirements and Stakeholders added.       |
+|  1.2           | Stories and Personas and Non Functional Requirements added.       |
+
 
 # Contents
 
@@ -122,7 +124,7 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |  NFR1   |    Usability                                |      Web application should be intuitive and user-friendly, requiring no specialized training for customers already familiar with e-commerce apps and websites. Managers should also find it straightforward to use it for different functions.       |    All FR       |
 |  NFR2   |    Efficiency                                |      All functions on the app must be completed in < 0.1 s, excluding internet connection time       |  All FR         |
 |  NFR3   |     Reliability                               |  No more than one defect per year per user, server must be online and operational 99% of the time      |    All FR       |
-| NFR4 |    Security                              | Data security and sharing between users and stores must be handled securely and in compliance with privacy regulations. Access should be restricted to authorized managers.        |    FR4       |
+| NFR4 |    Security                              | Data security and sharing between users and stores must be handled securely and in compliance with privacy regulations.        |    FR4       |
 | NFR5 |    Portability                              | Compatibility with most common browser (Chrome, Safari, Edge…)        |    All FR      |
 
 # Use case diagram and use cases
