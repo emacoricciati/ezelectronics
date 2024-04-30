@@ -1,8 +1,8 @@
 # Requirements Document - current EZElectronics
 
-Date:
+Date:30/04/2024
 
-Version: V2.0
+Version: V2.3
 
 | Version number | Change |
 | :------------: | :----: |
@@ -11,7 +11,9 @@ Version: V2.0
 |  1.3           | Context Diagram and Interfaces added.                      |
 |  1.4           | Use case diagram and use cases added.                      |
 |  1.5           | Glossary and deployment diagram added.                     |
-|  2.0           | Payment API added                                          |
+|  2.1           | Payment API added                                          |
+|  2.2           | Administrator role added                                   |
+|  2.3           | Products are associated with an image                      |
 
 
 # Contents
@@ -145,16 +147,16 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 
 ##### Scenario 1.1
 
-|  Scenario 1.1  |                                       Register a product                           |
-| :------------: | :------------------------------------------------------------------------:         |
-|  Precondition  | User logged in as manager                                                          |
-| Post condition | Product registered                                                                 |
-|     Step#      |                                Description                                         |
-|       1        |    User: ask to register a new product                                             |
-|       2        |    System: ask code, selling price, model, category, details, arrival date         |
-|       3        |   User: provide code, selling price, model, category, details, arrival date        |
-|       4        |   System: check that the provided code is not present in the db, product registered|
-|       5        |   System: show a success message                                                   |
+|  Scenario 1.1  |                                       Register a product                             |
+| :------------: | :------------------------------------------------------------------------:           |
+|  Precondition  | User logged in as manager                                                            |
+| Post condition | Product registered                                                                   |
+|     Step#      |                                Description                                           |
+|       1        | User: ask to register a new product                                                  |
+|       2        | System: ask code, selling price, model, category, details, arrival date, image file  |
+|       3        | User: provide code, selling price, model, category, details, arrival date, image file|
+|       4        | System: check that the provided code is not present in the db, product registered    |
+|       5        | System: show a success message                                                       |
 
 ##### Scenario 1.2
 
