@@ -2,7 +2,7 @@
 
 Date:30/04/2024
 
-Version: V2.3
+Version: V2.5
 
 | Version number | Change |
 | :------------: | :----: |
@@ -15,6 +15,7 @@ Version: V2.3
 |  2.2           | Administrator role added                                   |
 |  2.3           | Products are associated with an image                      |
 |  2.4           | Managers can search for carts                              |
+|  2.5           | Return Faulty Produscts functionality added                |
 
 
 # Contents
@@ -44,7 +45,7 @@ Version: V2.3
 
 # Informal description
 
-EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, confirm purchases and search for carts. Customers can see available products, add them to a cart, see the history of their past purchases, checkout their cart and decide whether to pay online or at pickup in the store. 
+EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, confirm purchases, search for carts and exchange faulty products. Customers can see available products, add them to a cart, see the history of their past purchases, checkout their cart and decide whether to pay online or at pickup in the store. 
 
 # Stakeholders
 
@@ -100,10 +101,11 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |  FR2.4    | Show a list of products |
 |  FR2.4.1  | This list can be filtered by: sold/not sold, a specific product, a specific category |
 |  FR2.5    | Delete a product |
+|  FR2.6    | Register the exchange of a faulty product |
 |  FR3      | Search carts |
 |  FR3.1    | Search carts by date or by user username, name or surname |
 |  FR3.2    | Access the status of the cart (checked-out/payed for/not checkd out) |
-|  FR3.2    | Identify the owner of the cart  |
+|  FR3.3    | Identify the owner of the cart  |
 |  FR4      | Manage Carts |
 |  FR4.1    | Add a product to its own cart |
 |  FR4.1.1  | A product can not be added to a cart cart twice |
@@ -146,9 +148,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User is logged in as manager                                         |
 |  Post condition  | Product registered/arrival date set for a set of products/product marked as sold/show list of products/product deleted   |
-| Nominal Scenario | Scenario 1.1, 1.2, 1.3, 1.4, 1.5                                     |
+| Nominal Scenario | Scenario 1.1, 1.2, 1.3, 1.4, 1.5, 1.6                                     |
 |     Variants     | None                                                                 |
-|    Exceptions    | Scenario 1.6, 1.7, 1.8, 1.9                                          |
+|    Exceptions    | Scenario 1.7, 1.8, 1.9, 1.10                                          |
 
 ##### Scenario 1.1
 
@@ -176,7 +178,6 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: check that the provided date is not after the current date, provided date is not after current date, arrival date set for the set of products  |
 
 ##### Scenario 1.3
-
 |  Scenario 1.3  |                                       Mark product as sold                                                   |
 | :------------: | :------------------------------------------------------------------------:                                   |
 |  Precondition  | User logged in as manager                                                                                    |
@@ -203,7 +204,6 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       2        | System: retrieve products and show them                                    |
 
 ##### Scenario 1.5
-
 |  Scenario 1.5  |                                       Delete a product                                           |
 | :------------: | :------------------------------------------------------------------------:                       |
 |  Precondition  | User logged in as manager                                                                        |
@@ -213,9 +213,27 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       2        | System: ask the product code                                                                     |
 |       3        | User: provide the product code                                                                   |
 |       4        | System: check that the provided code is present in the db, code already present, product deleted |
-##### Scenario 1.6
 
-|  Scenario 1.6  |               Duplicate code for a product    (register a product)                                         |
+##### Scenario 1.6
+|  Scenario 1.5  |                                       Exchange Product                                                       |
+| :------------: | :------------------------------------------------------------------------:                                   |
+|  Precondition  | User logged in as manager                                                                                    |
+| Post condition |  Product marked as sold with observation of being an exchanged item                                          |
+|     Step#      |                                Description                                                                   |
+|       1        | User: ask to mark a product as exchanged                                                                     |
+|       2        | System: ask the code of the product                                                     |
+|       3        | User: provide the code of the product                                                 |
+|       4        | System: check that the provided code is present in the db, the code is already present                       |
+|       7        | System: exchange date is set as the current date, selling price is set at zero    |
+|       8        | System: check that the exchange date is after the arrival date, exchange date is after the arrival date      |
+|       9        | System: retrieve the exchange date of the product given the code, check if selling date is already present, selling date is not present, selling date for the product is updated as the exchange date|
+|       10       | System: set observation field of the product as "Exchanged"|
+
+
+
+
+##### Scenario 1.7
+|  Scenario 1.7  |               Duplicate code for a product    (register a product)                                         |
 | :------------: | :------------------------------------------------------------------------:                                 |
 |  Precondition  | User logged in as manager                                                                                  |
 | Post condition | Product not registered                                                                                     |
@@ -226,9 +244,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: check that the provided code is not present in the db, code already present, product not registered|
 |       5        | System: show an error message                                                                              |
 
-##### Scenario 1.7
-
-|  Scenario 1.7  |                        Arrival date after current date                               |
+##### Scenario 1.8
+|  Scenario 1.8  |                        Arrival date after current date                               |
 | :------------: | :------------------------------------------------------------------------:           |
 |  Precondition  | User logged in as manager                                                            |
 | Post condition | Arrival date not set                                                                 |
@@ -239,9 +256,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: check that the provided date is not after the current date, provided date is after the current date, arrival date not set for set the of products|
 |       5        | System: show an error message                                                        |
 
-##### Scenario 1.8
-
-|  Scenario 1.8  |                    Mark product as sold (errors)                             |
+##### Scenario 1.9
+|  Scenario 1.9  |                    Mark product as sold (errors)                             |
 | :------------: | :------------------------------------------------------------------------:   |
 |  Precondition  | User logged in as manager                                                    |
 | Post condition | Product not marked as sold                                                   |
@@ -252,9 +268,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: run checks. The code is not present in the db OR selling date is after the current date OR selling date is before the arrival date OR selling date is already present in the db|
 |       5        | System: show an error message                                                |
 
-##### Scenario 1.9
-
-|  Scenario 1.9  |               Code is not present in the db (delete a product)                                 |
+##### Scenario 1.10
+|  Scenario 1.10 |               Code is not present in the db (delete a product)                                 |
 | :------------: | :------------------------------------------------------------------------:                     |
 |  Precondition  | User logged in as manager                                                                      |
 | Post condition | Product not deleted                                                                            |
@@ -782,6 +797,10 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       2        | System: asks input of category name to be edited                                   |
 |       3        | Administrator: provides category name, the category is not a valid category        |
 |       4        | System: Displays an error message                                                  |
+
+
+
+
 
 
 # Glossary
