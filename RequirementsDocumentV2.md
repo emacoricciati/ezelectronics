@@ -14,6 +14,7 @@ Version: V2.3
 |  2.1           | Payment API added                                          |
 |  2.2           | Administrator role added                                   |
 |  2.3           | Products are associated with an image                      |
+|  2.4           | Managers can search for carts                              |
 
 
 # Contents
@@ -43,7 +44,7 @@ Version: V2.3
 
 # Informal description
 
-EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, and confirm purchases. Customers can see available products, add them to a cart, see the history of their past purchases, checkout their cart and decide whether to pay online or at pickup in the store. 
+EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, confirm purchases and search for carts. Customers can see available products, add them to a cart, see the history of their past purchases, checkout their cart and decide whether to pay online or at pickup in the store. 
 
 # Stakeholders
 
@@ -99,26 +100,30 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |  FR2.4    | Show a list of products |
 |  FR2.4.1  | This list can be filtered by: sold/not sold, a specific product, a specific category |
 |  FR2.5    | Delete a product |
-|  FR3      | Manage Carts |
-|  FR3.1    | Add a product to its own cart |
-|  FR3.1.1  | A product can not be added to a cart cart twice |
-|  FR3.1.2  | A product can not be added to the cart if it is sold out |
-|  FR3.2    | Remove a product from it’s own cart |
-|  FR3.2.1  | Products can not be removed from the cart if it has already been paid for |
-|  FR3.3    | Check out the cart |
-|  FR3.4    | Customer can see it’s own cart history from last purchases |
-|  FR3.4.1  | Only previous carts that have been paid for can be found |
-|  FR3.5    | Costumer can decide whether to pay for the cart online or at the store during the pickup of the products |
-|  FR4      | Authorization and Authentication |
-|  FR4.1    | Log in and Log out |
-|  FR4.2    | Allow customer functionalities only for logged in customer |
-|  FR4.2.1  | Customer functionalities are the ones described in FR3.X |
-|  FR4.3    | Allow manager functionalities only for logged in managers |
-|  FR4.3.1  | Manager functionalities are the ones are described in FR2.X |
-|  FR5      | Application Administration |
-|  FR5.1    | Administrator needs to approve the creation of a Manager account  |
-|  FR5.2    | Administrator can create, delete and edit product categories |
-|  FR5.3    | Administrator can manage users: search and delete both Customers and Managers accounts |
+|  FR3      | Search carts |
+|  FR3.1    | Search carts by date or by user username, name or surname |
+|  FR3.2    | Access the status of the cart (checked-out/payed for/not checkd out) |
+|  FR3.2    | Identify the owner of the cart  |
+|  FR4      | Manage Carts |
+|  FR4.1    | Add a product to its own cart |
+|  FR4.1.1  | A product can not be added to a cart cart twice |
+|  FR4.1.2  | A product can not be added to the cart if it is sold out |
+|  FR4.2    | Remove a product from it’s own cart |
+|  FR4.2.1  | Products can not be removed from the cart if it has already been paid for |
+|  FR4.3    | Check out the cart |
+|  FR4.4    | Customer can see it’s own cart history from last purchases |
+|  FR4.4.1  | Only previous carts that have been paid for can be found |
+|  FR4.5    | Costumer can decide whether to pay for the cart online or at the store during the pickup of the products |
+|  FR5      | Authorization and Authentication |
+|  FR5.1    | Log in and Log out |
+|  FR5.2    | Allow customer functionalities only for logged in customer |
+|  FR5.2.1  | Customer functionalities are the ones described in FR4.X |
+|  FR5.3    | Allow manager functionalities only for logged in managers |
+|  FR5.3.1  | Manager functionalities are the ones are described in FR2.X and FR3.x |
+|  FR6      | Application Administration |
+|  FR6.1    | Administrator needs to approve the creation of a Manager account  |
+|  FR6.2    | Administrator can create, delete and edit product categories |
+|  FR6.3    | Administrator can manage users: search and delete both Customers and Managers accounts |
 
 ## Non Functional Requirements
 
@@ -143,7 +148,7 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |  Post condition  | Product registered/arrival date set for a set of products/product marked as sold/show list of products/product deleted   |
 | Nominal Scenario | Scenario 1.1, 1.2, 1.3, 1.4, 1.5                                     |
 |     Variants     | None                                                                 |
-|    Exceptions    | 1.6, 1.7, 1.8, 1.9                                                   |
+|    Exceptions    | Scenario 1.6, 1.7, 1.8, 1.9                                          |
 
 ##### Scenario 1.1
 
@@ -165,10 +170,10 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |  Precondition  | User logged in as manager                                                        |
 | Post condition |  Arrival date set                                                                |
 |     Step#      |                                Description                                       |
-|       1        |    User: ask to set arrival date for a set of products of the same model         |
-|       2        |    System: ask model, category, details, quantity, arrival date, selling price   |
-|       3        |   User: provide model, category, details, quantity, arrival date, selling price  |
-|       4        |   System: check that the provided date is not after the current date, provided date is not after current date, arrival date set for the set of products  |
+|       1        | User: ask to set arrival date for a set of products of the same model            |
+|       2        | System: ask model, category, details, quantity, arrival date, selling price      |
+|       3        | User: provide model, category, details, quantity, arrival date, selling price    |
+|       4        | System: check that the provided date is not after the current date, provided date is not after current date, arrival date set for the set of products  |
 
 ##### Scenario 1.3
 
@@ -259,19 +264,89 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | User: provide the product code                                                                 |
 |       4        | System: check that the provided code is in the db, code is not present, product is not deleted |
 
-### Use case 2, UC2 - Manage cart
+
+### Use case 2, UC2 - Search Carts
+
+| Actors Involved  |                               User (Manager)                         |
+| :--------------: | :------------------------------------------------------------------: |
+|   Precondition   | User is logged in as manager                                         |
+|  Post condition  | Carts informations are displayed                                     |
+| Nominal Scenario | Scenario 2.1, 2.2, 2.3                                               |
+|     Variants     | None                                                                 |
+|    Exceptions    | Scenario 2.4, 2.5                                                    |
+
+##### Scenario 2.1
+|  Scenario 2.1  |                             Search cart by username                                |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | User is logged in as manager                                                       |
+| Post condition | Carts informations are displayed by the system                                     |
+|     Step#      |               Description                                                          |
+|       1        | User: asks to search a cart by username                                            |
+|       2        | System: asks username to search                                                    |
+|       3        | User: provides username, it is a valid username                                    |
+|       4        | System: Dysplays a list of carts from the user with the username provided          |
+
+##### Scenario 2.2
+|  Scenario 2.2  |                             Search cart by Name/Surname                                  |
+| :------------: | :------------------------------------------------------------------------:               |
+|  Precondition  | User is logged in as manager                                                             |
+| Post condition | Carts informations are displayed by the system                                           |
+|     Step#      |               Description                                                                |
+|       1        | User: asks to search a cart by Name/Surname                                              |
+|       2        | System: asks Name/Surname to search                                                      |
+|       3        | User: provides a name or surname, there is at least one account with this name or surname|
+|       4        | System: Dysplays a list of carts from the users with the name or surname provided        |
+
+##### Scenario 2.3
+|  Scenario 2.3  |                             Search cart by Date                            |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User is logged in as manager                                               |
+| Post condition | Carts informations are displayed by the system                             |
+|     Step#      |               Description                                                  |
+|       1        | User: asks to search a cart by Date                                        |
+|       2        | System: asks the date to search                                            |
+|       3        | User: provides a date                                                      |
+|       4        | System: Dysplays a list of the carts checked-out on this date              |
+
+
+##### Scenario 2.4
+|  Scenario 2.4  |                             Search cart by username (invalid username)     |
+| :------------: | :------------------------------------------------------------------------: |
+|  Precondition  | User is logged in as manager                                               |
+| Post condition | Carts informations are displayed by the system                             |
+|     Step#      |               Description                                                  |
+|       1        | User: asks to search a cart by username                                    |
+|       2        | System: asks username to search                                            |
+|       3        | User: provides username, it is not a valid username                        |
+|       4        | System: Dysplays an error message                                          |
+
+
+##### Scenario 2.5
+|  Scenario 2.5  |                     Search cart by Name/Surname (invalid Name/Surname)       |
+| :------------: | :------------------------------------------------------------------------:   |
+|  Precondition  | User is logged in as manager                                                 |
+| Post condition | Carts informations are displayed by the system                               |
+|     Step#      |               Description                                                    |
+|       1        | User: asks to search a cart by Name/Surname                                  |
+|       2        | System: asks Name/Surname to search                                          |
+|       3        | User: provides a name or surname, there no account with this name or surname |
+|       4        | System: Dysplays an error message                                            |
+
+
+
+### Use case 3, UC3 - Manage cart
 
 | Actors Involved  |                               User (customer)                        |
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User is logged in as customer                                        |
 |  Post condition  | Product added/product removed/checkout/cart history shown            |
-| Nominal Scenario | Scenario 2.1, 2.2, 2.3, 2.5                                          |
-|     Variants     | Scenario 2.4                                                         |
-|    Exceptions    | Scenario 2.6, 2.7, 2.8, 2.9                                          |
+| Nominal Scenario | Scenario 3.1, 3.2, 3.3, 3.5                                          |
+|     Variants     | Scenario 3.4                                                         |
+|    Exceptions    | Scenario 3.6, 3.7, 3.8, 3.9                                          |
 
-##### Scenario 2.1
+##### Scenario 3.1
 
-|  Scenario 2.1  |            Add a product to the current cart of a logged in user                                         |
+|  Scenario 3.1  |            Add a product to the current cart of a logged in user                                         |
 | :------------: | :------------------------------------------------------------------------:                               |
 |  Precondition  | User logged in as customer                                                                               |
 | Post condition | Product added                                                                                            |
@@ -281,9 +356,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | System: check if the product code is already present in another cart,the product is only in one cart     |
 |       4        | System: check the availability of the product, the product is available, the product is added to the cart|
 
-##### Scenario 2.2
+##### Scenario 3.2
 
-|  Scenario 2.2  | Remove a product from the current cart of a logged in user                                     |
+|  Scenario 3.2  | Remove a product from the current cart of a logged in user                                     |
 | :------------: | :------------------------------------------------------------------------:                     |
 |  Precondition  | User logged in as customer                                                                     |
 | Post condition | Product removed                                                                                |
@@ -294,9 +369,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: check if the product exists in the db given the product code, the product exists       |
 |       5        | System: check the availability of the product, the product is available, the product is removed from the cart|
 
-##### Scenario 2.3
+##### Scenario 3.3
 
-|  Scenario 2.3  |                                       Checkout the cart to pay at pickup                                   |
+|  Scenario 3.3  |                                       Checkout the cart to pay at pickup                                   |
 | :------------: | :------------------------------------------------------------------------:                                 |
 |  Precondition  | User logged in as customer                                                                                 |
 | Post condition | Cart checked out                                                                                           |
@@ -307,9 +382,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: asks user when to do the payment, user indicates payment at pickup                                 |
 |       5        | System: set the total of cart as the sum of the costs of all products, set payment date as the current date|
 
-##### Scenario 2.4
+##### Scenario 3.4
 
-|  Scenario 2.4  |                                       Checkout the cart to pay online            |
+|  Scenario 3.4  |                                       Checkout the cart to pay online            |
 | :------------: | :------------------------------------------------------------------------:       |
 |  Precondition  | User logged in as customer                                                       |
 | Post condition | Cart checked out                                                                 |
@@ -324,9 +399,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 
 
 
-##### Scenario 2.5
+##### Scenario 3.5
 
-|  Scenario 2.5  |                          Show history of the carts                         |
+|  Scenario 3.5  |                          Show history of the carts                         |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User logged in as customer                                                 |
 | Post condition | History of carts shown                                                     |
@@ -334,9 +409,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       1        | User: ask to see the history of carts                                      |
 |       2        | System: show the history of carts for the user                             |
 
-##### Scenario 2.6
+##### Scenario 3.6
 
-|  Scenario 2.6  |             Product is not added to the cart                               |
+|  Scenario 3.6  |             Product is not added to the cart                               |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User logged in as customer                                                 |
 | Post condition | Product not added                                                          |
@@ -345,9 +420,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       2        | System: run checks. The product doesn't exist in the db OR the product is available in more than one cart OR the product is not available|
 |       3        | System: show an error message                                              |
 
-##### Scenario 2.7
+##### Scenario 3.7
 
-|  Scenario 2.7  |                      Product is not removed from the cart                  |
+|  Scenario 3.7  |                      Product is not removed from the cart                  |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User logged in as customer                                                 |
 | Post condition | Product not removed                                                        |
@@ -356,9 +431,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       2        | System: run checks. The product is not present in the cart OR the user doesn't have a cart OR the product doesn't exist in the db OR the product is not available|
 |       3        | System: show an error message                                              |
 
-##### Scenario 2.8
+##### Scenario 3.8
 
-|  Scenario 2.8  |           Cart not checked out (cart doesn't exist)                        |
+|  Scenario 3.8  |           Cart not checked out (cart doesn't exist)                        |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User logged in as customer                                                 |
 | Post condition | Cart not checked out                                                       |
@@ -368,9 +443,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | System: show an error message                                              |
 
 
-##### Scenario 2.9
+##### Scenario 3.9
 
-|  Scenario 2.9  |                  Cart not checked out (empty cart)                         |
+|  Scenario 3.9  |                  Cart not checked out (empty cart)                         |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User logged in as customer                                                 |
 | Post condition | Cart not checked out                                                       |
@@ -380,9 +455,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | System: check if cart is empty, the cart is empty                          |
 |       4        | System: show an error message                                              |
 
-##### Scenario 2.10
+##### Scenario 3.10
 
-|  Scenario 2.10  |                     Cart not checked out (online payment not aprooved)        |
+|  Scenario 3.10  |                     Cart not checked out (online payment not aprooved)        |
 | :------------:  | :------------------------------------------------------------------------:    |
 |  Precondition   | User logged in as customer                                                    |
 | Post condition  | Cart not checked out                                                          |
@@ -397,19 +472,19 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 
 
 
-### Use case 3, UC3 - Login
+### Use case 4, UC4 - Login
 
 | Actors Involved  |                               User                                   |
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User not logged in, user registered                                  |
 |  Post condition  | User logged in                                                       |
-| Nominal Scenario | Scenario 3.1                                                         |
+| Nominal Scenario | Scenario 4.1                                                         |
 |     Variants     | None                                                                 |
-|    Exceptions    | Scenario 3.2, 3.3, 3.4                                               |
+|    Exceptions    | Scenario 4.2, 4.3, 4.4                                               |
 
-##### Scenario 3.1
+##### Scenario 4.1
 
-|  Scenario 3.1  |                                       Login                                                        |
+|  Scenario 4.1  |                                       Login                                                        |
 | :------------: | :------------------------------------------------------------------------:                         |
 |  Precondition  | User not logged in, user registered                                                                |
 | Post condition | User logged in                                                                                     |
@@ -419,9 +494,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | System: read username and password, check cookie, user is not logged in                            |
 |       4        | System: retrieve password in db from username,compare passwords. Passwords match, user is logged in|
 
-##### Scenario 3.2
+##### Scenario 4.2
 
-|  Scenario 3.2  |                          Wrong password                                                                      |
+|  Scenario 4.2  |                          Wrong password                                                                      |
 | :------------: | :------------------------------------------------------------------------:                                   |
 |  Precondition  | User not logged in, user registered                                                                          |
 | Post condition | User not logged in                                                                                           |
@@ -431,9 +506,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | System: read username and password, check cookie, user is not logged in                                      |
 |       4        | System: retrieve password in db from username,compare passwords. Passwords don't match, user is not logged in|
 
-##### Scenario 3.3
+##### Scenario 4.3
 
-|  Scenario 3.3  |                                       User not registered                            |
+|  Scenario 4.3  |                                       User not registered                            |
 | :------------: | :------------------------------------------------------------------------:           |
 |  Precondition  | User not logged in, user not registered                                              |
 | Post condition | User not registered                                                                  |
@@ -443,9 +518,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | System: read username and password, check cookie, user is not logged in              |
 |       4        | System: given username retrieve user in db. User is not found, user is not authorized|
 
-##### Scenario 3.4
+##### Scenario 4.4
 
-|  Scenario 3.4  |                            User already logged in                          |
+|  Scenario 4.4  |                            User already logged in                          |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User not logged in, user registered                                        |
 | Post condition | User logged in                                                             |
@@ -456,19 +531,19 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: send an error message                                              |
 
 
-### Use case 4, UC4 - Logout
+### Use case 5, UC5 - Logout
 
 | Actors Involved  |                               User                                   |
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User logged in                                                       |
 |  Post condition  | User not logged in                                                   |
-| Nominal Scenario | Scenario 4.1                                                         |
+| Nominal Scenario | Scenario 5.1                                                         |
 |     Variants     | None                                                                 |
-|    Exceptions    | Scenario 4.2                                                         |
+|    Exceptions    | Scenario 5.2                                                         |
 
-##### Scenario 4.1
+##### Scenario 5.1
 
-|  Scenario 4.1  |                                       Logout                                       |
+|  Scenario 5.1  |                                       Logout                                       |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | User logged in                                                                     |
 | Post condition | User not logged in                                                                 |
@@ -477,9 +552,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       2        | System: retrieve user from username in the db, check cookie, the user is logged in |
 |       3        | System: remove authorization to the user device, show a logout message             |
 
-##### Scenario 4.2
+##### Scenario 5.2
 
-|  Scenario 4.2  |                                       User already logged out                          |
+|  Scenario 5.2  |                                       User already logged out                          |
 | :------------: | :------------------------------------------------------------------------:             |
 |  Precondition  | User not logged in                                                                     |
 | Post condition | User not logged in                                                                     |
@@ -488,19 +563,19 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       2        | System: retrieve user from username in the db, check cookie, the user is not logged in |
 |       3        | System: show an error message                                                          |
 
-### Use case 5, UC5 - Registration
+### Use case 6, UC6 - Registration
 
 | Actors Involved  |                               User                                   |
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User not registered                                                  |
 |  Post condition  | User registered                                                      |
-| Nominal Scenario | Scenario 5.1                                                         |
-|     Variants     | Scenario 5.2                                                         |
-|    Exceptions    | Scenario 5.3                                                         |
+| Nominal Scenario | Scenario 6.1                                                         |
+|     Variants     | Scenario 6.2                                                         |
+|    Exceptions    | Scenario 6.3                                                         |
 
-##### Scenario 5.1
+##### Scenario 6.1
 
-|  Scenario 5.1  |                               Registration of Customer profile                   |
+|  Scenario 6.1  |                               Registration of Customer profile                   |
 | :------------: | :------------------------------------------------------------------------:       |
 |  Precondition  | User not registered                                                              |
 | Post condition | Customer user registered                                                         |
@@ -512,9 +587,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       5        | System: create a new user, store his information                                 |
 
 
-##### Scenario 5.2
+##### Scenario 6.2
 
-|  Scenario 5.2  |                               Registration of Manager profile                        |
+|  Scenario 6.2  |                               Registration of Manager profile                        |
 | :------------: | :------------------------------------------------------------------------:           |
 |  Precondition  | User not registered                                                                  |
 | Post condition | Request for account creation sent do administrator                                   |
@@ -526,9 +601,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       5        | System: send request for approval of Manager profile creation, store his information |
 
 
-##### Scenario 5.3
+##### Scenario 6.3
 
-|  Scenario 5.3  |                                 Registration                               |
+|  Scenario 6.3  |                                 Registration                               |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User registered                                                            |
 | Post condition | User not registered                                                        |
@@ -539,19 +614,19 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: check that the provided username isn't associated with any account yet. The username has been already used|
 |       5        | System: show an error message                                              |
 
-### Use case 6, UC6 - Manage roles
+### Use case 7, UC7 - Manage roles
 
 | Actors Involved  |                               User                                   |
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User is logged in as customer/manager                                |
 |  Post condition  | Perform actions related to the role                                  |
-| Nominal Scenario | Scenario 6.1                                                         |
+| Nominal Scenario | Scenario 7.1                                                         |
 |     Variants     | None                                                                 |
-|    Exceptions    | Scenario 6.2                                                         |
+|    Exceptions    | Scenario 7.2                                                         |
 
-##### Scenario 6.1
+##### Scenario 7.1
 
-|  Scenario 6.1  |                             Perform action                                         |
+|  Scenario 7.1  |                             Perform action                                         |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | User logged in as customer/manager                                                 |
 | Post condition | Action performed                                                                   |
@@ -559,8 +634,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       1        | User: ask to perform action                                                        |
 |       2        | System: check if role of the user, the role of the user is correct, perform action |
 
-##### Scenario 6.2
-|  Scenario 6.2  |        Action not performed (user not authorized)                          |
+##### Scenario 7.2
+|  Scenario 7.2  |        Action not performed (user not authorized)                          |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User logged in as customer/manager                                         |
 | Post condition | Action  not performed                                                      |
@@ -570,19 +645,19 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | System: show an error message                                              |
 
 
-### Use case 7, UC7 - Approve Manager account creation
+### Use case 8, UC8 - Approve Manager account creation
 
 | Actors Involved  |                               Adminitrator, User                             |
 | :--------------: | :------------------------------------------------------------------:         |
 |   Precondition   | Administrator is accessing the application, an user crated a Manager account |
 |  Post condition  | Account creation is approved/denied                                          |
-| Nominal Scenario | Scenario 7.1                                                                 |
-|     Variants     | Scenario 7.2                                                                 |
+| Nominal Scenario | Scenario 8.1                                                                 |
+|     Variants     | Scenario 8.2                                                                 |
 |    Exceptions    | None                                                                         |
 
-##### Scenario 7.1
+##### Scenario 8.1
 
-|  Scenario 7.1  |                             Approve Account creation                               |
+|  Scenario 8.1  |                             Approve Account creation                               |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | Administrator is accessing the application, an user crated a Manager account       |
 | Post condition | Manager account is created                                                         |
@@ -593,9 +668,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | Administrator: Apporoves the creation of the account                               |
 |       5        | System: Creates a new user                                                         |
 
-##### Scenario 7.2
+##### Scenario 8.2
 
-|  Scenario 7.2  |                             Deny Account creation                                  |
+|  Scenario 8.2  |                             Deny Account creation                                  |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | Administrator is accessing the application, an user crated a Manager account       |
 | Post condition | Manager account is not created                                                     |
@@ -606,19 +681,19 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | Administrator: Denies the creation of the account                                  |
 |       5        | System: Displays message that account was not created                              |
 
-### Use case 8, UC8 - Manage Users
+### Use case 9, UC9 - Manage Users
 
 | Actors Involved  |                               Adminitrator                                   |
 | :--------------: | :------------------------------------------------------------------:         |
 |   Precondition   | Administrator is accessing the application                                   |
 |  Post condition  | An account is deleted                                                        |
-| Nominal Scenario | Scenario 8.1                                                                 |
+| Nominal Scenario | Scenario 9.1                                                                 |
 |     Variants     | None                                                                         |
-|    Exceptions    | Scenario 8.2                                                                 |
+|    Exceptions    | Scenario 9.2                                                                 |
 
-##### Scenario 8.1
+##### Scenario 9.1
 
-|  Scenario 8.1  |                             Delete a user account                                  |
+|  Scenario 9.1  |                             Delete a user account                                  |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | Administrator is accessing the application                                         |
 | Post condition | User account is deleted                                                            |
@@ -629,9 +704,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | Administrator: selects users to delete and confirm deletion                        |
 |       5        | System: Deletes accounts selected                                                  |
 
-##### Scenario 8.2
+##### Scenario 9.2
 
-|  Scenario 8.2  |               User account not deletes (no match in search)                        |
+|  Scenario 9.2  |               User account not deletes (no match in search)                        |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | Administrator is accessing the application                                         |
 | Post condition | No user account is deleted                                                         |
@@ -642,17 +717,17 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 
 
 
-### Use case 9, UC9 - Manage Product Categories
+### Use case 10, UC10 - Manage Product Categories
 | Actors Involved  |                               Adminitrator                                   |
 | :--------------: | :------------------------------------------------------------------:         |
 |   Precondition   | Administrator is accessing the application                                   |
 |  Post condition  | List of Product categories is altered                                        |
-| Nominal Scenario | Scenario 9.1, 9.2, 9.3                                                       |
+| Nominal Scenario | Scenario 10.1, 10.2, 10.3                                                    |
 |     Variants     | None                                                                         |
-|    Exceptions    | Scenario 9.4                                                                 |
+|    Exceptions    | Scenario 10.4, 10.5                                                          |
 
-##### Scenario 9.1
-|  Scenario 9.1  |                             Create new category                                    |
+##### Scenario 10.1
+|  Scenario 10.1  |                             Create new category                                   |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | Administrator is accessing the application                                         |
 | Post condition | A new product category is created                                                  |
@@ -662,8 +737,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | Administrator: provides new category name                                          |
 |       4        | System: Creates new product category                                               |
 
-##### Scenario 9.2
-|  Scenario 9.2  |                             Remove a category                                      |
+##### Scenario 10.2
+|  Scenario 10.2  |                             Remove a category                                     |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | Administrator is accessing the application                                         |
 | Post condition | A product category is removed                                                      |
@@ -673,8 +748,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | Administrator: provides category name, the category is a valid category            |
 |       4        | System: Deletes the category                                                       |
 
-##### Scenario 9.3
-|  Scenario 9.3  |                             Edit a Category name                                   |
+##### Scenario 10.3
+|  Scenario 10.3  |                             Edit a Category name                                  |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | Administrator is accessing the application                                         |
 | Post condition | A product category name is edited                                                  |
@@ -686,8 +761,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       5        | Administrator: Provides a new name for the category                                |
 |       6        | System: Updates the category name                                                  |
 
-##### Scenario 9.4
-|  Scenario 9.4  |          Category not removed (invalid name provided)                              |
+##### Scenario 10.4
+|  Scenario 10.4  |          Category not removed (invalid name provided)                             |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | Administrator is accessing the application                                         |
 | Post condition | A product category is not removed                                                  |
@@ -697,8 +772,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       3        | Administrator: provides category name, the category is not a valid category        |
 |       4        | System: Displays an error message                                                  |
 
-##### Scenario 9.5
-|  Scenario 9.5  |           Category name not edited (invalid name provided)                         |
+##### Scenario 10.5
+|  Scenario 10.5  |           Category name not edited (invalid name provided)                        |
 | :------------: | :------------------------------------------------------------------------:         |
 |  Precondition  | Administrator is accessing the application                                         |
 | Post condition | A product category is not edited                                                   |
