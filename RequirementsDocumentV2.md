@@ -6,12 +6,12 @@ Version: V2.0
 
 | Version number | Change |
 | :------------: | :----: |
-|  1.1           | Functional Requirements and Stakeholders added.       |
-|  1.2           | Stories and Personas and Non Functional Requirements added.       |
-|  1.3           | Context Diagram and Interfaces added.       |
-|  1.4           | Use case diagram and use cases added.       |
-|  1.5           | Glossary and deployment diagram added.       |
-|  2.0           | Payment API added       |
+|  1.1           | Functional Requirements and Stakeholders added.            |
+|  1.2           | Stories and Personas and Non Functional Requirements added.|
+|  1.3           | Context Diagram and Interfaces added.                      |
+|  1.4           | Use case diagram and use cases added.                      |
+|  1.5           | Glossary and deployment diagram added.                     |
+|  2.0           | Payment API added                                          |
 
 
 # Contents
@@ -41,7 +41,7 @@ Version: V2.0
 
 # Informal description
 
-EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, and confirm purchases. Customers can see available products, add them to a cart, see the history of their past purchases, checkout their cart and decide whether to pay online or at pickup in the store.
+EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, and confirm purchases. Customers can see available products, add them to a cart, see the history of their past purchases, checkout their cart and decide whether to pay online or at pickup in the store. 
 
 # Stakeholders
 
@@ -51,6 +51,7 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 | Manager          | Application user responsible for managing the state of the App (list of products, product availability) and registering the sales in the app. |
 | Seller at Point Of Sale (POS)| Person responsible for managing the sale at the POS, by handing the bought items to the customer and receiving the payment. Can also be the manager, but not necessarily. |
 | Store Owner      | Owner of the electronics store who purchases the EZElectronics software in order to have a dedicated website facilitating its sales.|
+| Administrator    | Responsible for maintaining the application and authorizing the creation of Manager profiles     |
 
 # Context Diagram and interfaces
 
@@ -63,8 +64,9 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 |   Actor   | Logical Interface | Physical Interface |
 | :-------: | :---------------: | :----------------: 
-|Customer  | GUI(to be defined - key function, create a personal account, show stores and their products, purchases)  |    Smartphone or PC      |
-|Manager  | GUI (to be defined - interface for view, add products and control usr,manage payments)|    smartphone or PC    |
+|Customer     | GUI (key function, create a personal account, show stores and their products, purchases)  | Smartphone or PC|
+|Manager      | GUI (interface for view, add products and control usr,manage payments)                    | Smartphone or PC|
+|Administrator| Command Line Interface                                                                    | PC              |
 
 # Stories and personas
 
@@ -110,7 +112,11 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |  FR4.2    | Allow customer functionalities only for logged in customer |
 |  FR4.2.1  | Customer functionalities are the ones described in FR3.X |
 |  FR4.3    | Allow manager functionalities only for logged in managers |
-| FR4.3.1   | Manager functionalities are the ones are described in FR2.X |
+|  FR4.3.1  | Manager functionalities are the ones are described in FR2.X |
+|  FR5      | Application Administration |
+|  FR5.1    | Administrator needs to approve the creation of a Manager account  |
+|  FR5.2    | Administrator can create, delete and edit product categories |
+|  FR5.3    | Administrator can manage users: search and delete both Customers and Managers accounts |
 
 ## Non Functional Requirements
 
@@ -487,25 +493,40 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |   Precondition   | User not registered                                                  |
 |  Post condition  | User registered                                                      |
 | Nominal Scenario | Scenario 5.1                                                         |
-|     Variants     | None                                                                 |
-|    Exceptions    | Scenario 5.2                                                         |
+|     Variants     | Scenario 5.2                                                         |
+|    Exceptions    | Scenario 5.3                                                         |
 
 ##### Scenario 5.1
 
-|  Scenario 5.1  |                                       Registration                         |
-| :------------: | :------------------------------------------------------------------------: |
-|  Precondition  | User not registered                                                        |
-| Post condition | User registered                                                            |
-|     Step#      |            Description                                                     |
-|       1        | User: ask to register                                                      |
-|       2        | System: ask username, name, surname, password, role                        |
-|       3        | User: provide username, name, surname, password, role                      |
+|  Scenario 5.1  |                               Registration of Customer profile                   |
+| :------------: | :------------------------------------------------------------------------:       |
+|  Precondition  | User not registered                                                              |
+| Post condition | Customer user registered                                                         |
+|     Step#      |            Description                                                           |
+|       1        | User: ask to register                                                            |
+|       2        | System: ask username, name, surname, password, role                              |
+|       3        | User: provide username, name, surname, password, role. Role provided is Customer |
 |       4        | System: check that the provided username isn't associated with any account yet. The username hasn't been used yet |
-|       5        | System: create a new user, store his information                           |
+|       5        | System: create a new user, store his information                                 |
+
 
 ##### Scenario 5.2
 
-|  Scenario 5.2  |                                 Registration                               |
+|  Scenario 5.2  |                               Registration of Manager profile                        |
+| :------------: | :------------------------------------------------------------------------:           |
+|  Precondition  | User not registered                                                                  |
+| Post condition | Request for account creation sent do administrator                                   |
+|     Step#      |            Description                                                               |
+|       1        | User: ask to register                                                                |
+|       2        | System: ask username, name, surname, password, role                                  |
+|       3        | User: provide username, name, surname, password, role. Role provided is Manager      |
+|       4        | System: check that the provided username isn't associated with any account yet. The username hasn't been used yet |
+|       5        | System: send request for approval of Manager profile creation, store his information |
+
+
+##### Scenario 5.3
+
+|  Scenario 5.3  |                                 Registration                               |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User registered                                                            |
 | Post condition | User not registered                                                        |
@@ -545,6 +566,146 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       1        | User: ask to perform action                                                |
 |       2        | System: check if role of the user, the role of the user is not correct     |
 |       3        | System: show an error message                                              |
+
+
+### Use case 7, UC7 - Approve Manager account creation
+
+| Actors Involved  |                               Adminitrator, User                             |
+| :--------------: | :------------------------------------------------------------------:         |
+|   Precondition   | Administrator is accessing the application, an user crated a Manager account |
+|  Post condition  | Account creation is approved/denied                                          |
+| Nominal Scenario | Scenario 7.1                                                                 |
+|     Variants     | Scenario 7.2                                                                 |
+|    Exceptions    | None                                                                         |
+
+##### Scenario 7.1
+
+|  Scenario 7.1  |                             Approve Account creation                               |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | Administrator is accessing the application, an user crated a Manager account       |
+| Post condition | Manager account is created                                                         |
+|     Step#      |               Description                                                          |
+|       1        | System: Notifies administrator about an attempt to create a Manager account        |
+|       2        | Administrator: Asks system to review attempt                                       |
+|       3        | System: Displays username, name, surname of user attempting to create account      |
+|       4        | Administrator: Apporoves the creation of the account                               |
+|       5        | System: Creates a new user                                                         |
+
+##### Scenario 7.2
+
+|  Scenario 7.2  |                             Deny Account creation                                  |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | Administrator is accessing the application, an user crated a Manager account       |
+| Post condition | Manager account is not created                                                     |
+|     Step#      |               Description                                                          |
+|       1        | System: Notifies administrator about an attempt to create a Manager account        |
+|       2        | Administrator: Asks system to review attempt                                       |
+|       3        | System: Displays username, name, surname of user attempting to create account      |
+|       4        | Administrator: Denies the creation of the account                                  |
+|       5        | System: Displays message that account was not created                              |
+
+### Use case 8, UC8 - Manage Users
+
+| Actors Involved  |                               Adminitrator                                   |
+| :--------------: | :------------------------------------------------------------------:         |
+|   Precondition   | Administrator is accessing the application                                   |
+|  Post condition  | An account is deleted                                                        |
+| Nominal Scenario | Scenario 8.1                                                                 |
+|     Variants     | None                                                                         |
+|    Exceptions    | Scenario 8.2                                                                 |
+
+##### Scenario 8.1
+
+|  Scenario 8.1  |                             Delete a user account                                  |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | Administrator is accessing the application                                         |
+| Post condition | User account is deleted                                                            |
+|     Step#      |               Description                                                          |
+|       1        | System: asks which information to use on search: name, surname or username         |
+|       2        | Administrator: Choses one of the options and inputs it in the system, there is at least one correspondance in the database|
+|       3        | System: Displays informations of users that matches the search                     |
+|       4        | Administrator: selects users to delete and confirm deletion                        |
+|       5        | System: Deletes accounts selected                                                  |
+
+##### Scenario 8.2
+
+|  Scenario 8.2  |               User account not deletes (no match in search)                        |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | Administrator is accessing the application                                         |
+| Post condition | No user account is deleted                                                         |
+|     Step#      |               Description                                                          |
+|       1        | System: asks which information to use on search: name, surname or username         |
+|       2        | Administrator: Choses one of the options and inputs it in the system, there is no correspondance in the database|
+|       3        | System: Displays error message of "No results found"                     |
+
+
+
+### Use case 9, UC9 - Manage Product Categories
+| Actors Involved  |                               Adminitrator                                   |
+| :--------------: | :------------------------------------------------------------------:         |
+|   Precondition   | Administrator is accessing the application                                   |
+|  Post condition  | List of Product categories is altered                                        |
+| Nominal Scenario | Scenario 9.1, 9.2, 9.3                                                       |
+|     Variants     | None                                                                         |
+|    Exceptions    | Scenario 9.4                                                                 |
+
+##### Scenario 9.1
+|  Scenario 9.1  |                             Create new category                                    |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | Administrator is accessing the application                                         |
+| Post condition | A new product category is created                                                  |
+|     Step#      |               Description                                                          |
+|       1        | Administrator: asks to create category                                             |
+|       2        | System: asks input of new category name                                            |
+|       3        | Administrator: provides new category name                                          |
+|       4        | System: Creates new product category                                               |
+
+##### Scenario 9.2
+|  Scenario 9.2  |                             Remove a category                                      |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | Administrator is accessing the application                                         |
+| Post condition | A product category is removed                                                      |
+|     Step#      |               Description                                                          |
+|       1        | Administrator: asks to remove a category                                           |
+|       2        | System: asks input of category name to be removed                                  |
+|       3        | Administrator: provides category name, the category is a valid category            |
+|       4        | System: Deletes the category                                                       |
+
+##### Scenario 9.3
+|  Scenario 9.3  |                             Edit a Category name                                   |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | Administrator is accessing the application                                         |
+| Post condition | A product category name is edited                                                  |
+|     Step#      |               Description                                                          |
+|       1        | Administrator: asks to edit a category                                             |
+|       2        | System: asks input of category name to be edited                                   |
+|       3        | Administrator: provides category name, the category is a valid category            |
+|       4        | System: Asks for the new name for the category                                     |
+|       5        | Administrator: Provides a new name for the category                                |
+|       6        | System: Updates the category name                                                  |
+
+##### Scenario 9.4
+|  Scenario 9.4  |          Category not removed (invalid name provided)                              |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | Administrator is accessing the application                                         |
+| Post condition | A product category is not removed                                                  |
+|     Step#      |               Description                                                          |
+|       1        | Administrator: asks to remove a category                                           |
+|       2        | System: asks input of category name to be removed                                  |
+|       3        | Administrator: provides category name, the category is not a valid category        |
+|       4        | System: Displays an error message                                                  |
+
+##### Scenario 9.5
+|  Scenario 9.5  |           Category name not edited (invalid name provided)                         |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | Administrator is accessing the application                                         |
+| Post condition | A product category is not edited                                                   |
+|     Step#      |               Description                                                          |
+|       1        | Administrator: asks to edit a category                                             |
+|       2        | System: asks input of category name to be edited                                   |
+|       3        | Administrator: provides category name, the category is not a valid category        |
+|       4        | System: Displays an error message                                                  |
+
 
 # Glossary
 
