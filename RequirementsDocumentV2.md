@@ -2,7 +2,7 @@
 
 Date:30/04/2024
 
-Version: V2.5
+Version: V2.6
 
 | Version number | Change |
 | :------------: | :----: |
@@ -16,6 +16,7 @@ Version: V2.5
 |  2.3           | Products are associated with an image                      |
 |  2.4           | Managers can search for carts                              |
 |  2.5           | Return Faulty Produscts functionality added                |
+|  2.6           | Ratings and Reviews for products added                     |
 
 
 # Contents
@@ -45,7 +46,7 @@ Version: V2.5
 
 # Informal description
 
-EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, confirm purchases, search for carts and exchange faulty products. Customers can see available products, add them to a cart, see the history of their past purchases, checkout their cart and decide whether to pay online or at pickup in the store. 
+EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, confirm purchases, search for carts and exchange faulty products. Customers can see available products, add them to a cart, see the history of their past purchases, checkout their cart and decide whether to pay online or at pickup in the store and give reviews to products. 
 
 # Stakeholders
 
@@ -116,16 +117,20 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |  FR4.4    | Customer can see it’s own cart history from last purchases |
 |  FR4.4.1  | Only previous carts that have been paid for can be found |
 |  FR4.5    | Costumer can decide whether to pay for the cart online or at the store during the pickup of the products |
-|  FR5      | Authorization and Authentication |
-|  FR5.1    | Log in and Log out |
-|  FR5.2    | Allow customer functionalities only for logged in customer |
-|  FR5.2.1  | Customer functionalities are the ones described in FR4.X |
-|  FR5.3    | Allow manager functionalities only for logged in managers |
-|  FR5.3.1  | Manager functionalities are the ones are described in FR2.X and FR3.x |
-|  FR6      | Application Administration |
-|  FR6.1    | Administrator needs to approve the creation of a Manager account  |
-|  FR6.2    | Administrator can create, delete and edit product categories |
-|  FR6.3    | Administrator can manage users: search and delete both Customers and Managers accounts |
+|  FR5      | Rate Products |
+|  FR5.1    | Add a score to a product |
+|  FR5.2    | Add a review to a product |
+|  FR5.2.1  | A review can't be added if no score is given to the product |
+|  FR6      | Authorization and Authentication |
+|  FR6.1    | Log in and Log out |
+|  FR6.2    | Allow customer functionalities only for logged in customer |
+|  FR6.2.1  | Customer functionalities are the ones described in FR4.X and FR5.X |
+|  FR6.3    | Allow manager functionalities only for logged in managers |
+|  FR6.3.1  | Manager functionalities are the ones are described in FR2.X and FR3.x |
+|  FR7      | Application Administration |
+|  FR7.1    | Administrator needs to approve the creation of a Manager account  |
+|  FR7.2    | Administrator can create, delete and edit product categories |
+|  FR7.3    | Administrator can manage users: search and delete both Customers and Managers accounts |
 
 ## Non Functional Requirements
 
@@ -799,7 +804,58 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: Displays an error message                                                  |
 
 
+### Use case 11, UC11 - Review a Product
+| Actors Involved  |                               Adminitrator                                   |
+| :--------------: | :------------------------------------------------------------------:         |
+|   Precondition   | User is logged in as Customer                                                |
+|  Post condition  | A review and/or rating is added to a product                                 |
+| Nominal Scenario | Scenario 11.2                                                                |
+|     Variants     | Scenario 11.3                                                                |
+|    Exceptions    | Scenario 11.4                                                                |
 
+##### Scenario 11.1
+|  Scenario 11.1  |                   Rate a product and give a review                                |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | User is logged in as Customer                                                      |
+| Post condition | A review and a rating is added to the product                                      |
+|     Step#      |               Description                                                          |
+|       1        | User: asks to rate a product                                                       |
+|       2        | System: asks input of what rate                                                    |
+|       3        | User: provides a rating for product                                                |
+|       4        | System: asks if user wants also to add a review associated to the rating           |
+|       5        | User: provides a response to the system, asks to include a review                  |
+|       6        | System: asks user for a text input of the review                                   |
+|       7        | User: provides a text inout, the input is not empty                                |
+|       8        | System: Adds the rating and review to the product                                  |
+
+##### Scenario 11.2
+|  Scenario 11.2  |                   Rate a product without giving a review                          |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | User is logged in as Customer                                                      |
+| Post condition | A review and a rating is added to the product                                      |
+|     Step#      |               Description                                                          |
+|       1        | User: asks to rate a product                                                       |
+|       2        | System: asks input of what rate                                                    |
+|       3        | User: provides a rating for product                                                |
+|       4        | System: asks if user wants also to add a review associated to the rating           |
+|       5        | User: provides a response to the system, asks to not include a review              |
+|       6        | System: Adds the rating without an associated review to the product                |
+
+
+##### Scenario 11.3
+|  Scenario 11.3  |            Rate a product without giving a review (invalid review)                |
+| :------------: | :------------------------------------------------------------------------:         |
+|  Precondition  | User is logged in as Customer                                                      |
+| Post condition | A review and a rating is added to the product                                      |
+|     Step#      |               Description                                                          |
+|       1        | User: asks to rate a product                                                       |
+|       2        | System: asks input of what rate                                                    |
+|       3        | User: provides a rating for product                                                |
+|       4        | System: asks if user wants also to add a review associated to the rating           |
+|       5        | User: provides a response to the system, asks to include a review                  |
+|       6        | System: asks user for a text input of the review                                   |
+|       7        | User: provides a text inout, the input is empty                                    |
+|       8        | System: Adds the rating without an associated review to the product                |
 
 
 
