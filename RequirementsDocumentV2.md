@@ -1,8 +1,8 @@
 # Requirements Document - current EZElectronics
 
-Date:30/04/2024
+Date:01/05/2024
 
-Version: V2.6
+Version: V2.7
 
 | Version number | Change |
 | :------------: | :----: |
@@ -17,6 +17,7 @@ Version: V2.6
 |  2.4           | Managers can search for carts                              |
 |  2.5           | Return Faulty Produscts functionality added                |
 |  2.6           | Ratings and Reviews for products added                     |
+|  2.7           | Managers can change product prices                         |
 
 
 # Contents
@@ -34,19 +35,73 @@ Version: V2.6
   - [Non Functional Requirements](#non-functional-requirements)
 - [Use case diagram and use cases](#use-case-diagram-and-use-cases)
   - [Use case diagram](#use-case-diagram)
-    - [Use case 1, UC1](#use-case-1-uc1)
+    - [Use case 1, UC1 - Manage products](#use-case-1-uc1---manage-products)
       - [Scenario 1.1](#scenario-11)
       - [Scenario 1.2](#scenario-12)
-      - [Scenario 1.x](#scenario-1x)
-    - [Use case 2, UC2](#use-case-2-uc2)
-    - [Use case x, UCx](#use-case-x-ucx)
+      - [Scenario 1.3](#scenario-13)
+      - [Scenario 1.4](#scenario-14)
+      - [Scenario 1.5](#scenario-15)
+      - [Scenario 1.6](#scenario-16)
+      - [Scenario 1.7](#scenario-17)
+      - [Scenario 1.8](#scenario-18)
+      - [Scenario 1.9](#scenario-19)
+      - [Scenario 1.10](#scenario-110)
+      - [Scenario 1.11](#scenario-111)
+    - [Use case 2, UC2 - Search Carts](#use-case-2-uc2---search-carts)
+      - [Scenario 2.1](#scenario-21)
+      - [Scenario 2.2](#scenario-22)
+      - [Scenario 2.3](#scenario-23)
+      - [Scenario 2.4](#scenario-24)
+      - [Scenario 2.5](#scenario-25)
+    - [Use case 3, UC3 - Manage cart](#use-case-3-uc3---manage-cart)
+      - [Scenario 3.1](#scenario-31)
+      - [Scenario 3.2](#scenario-32)
+      - [Scenario 3.3](#scenario-33)
+      - [Scenario 3.4](#scenario-34)
+      - [Scenario 3.5](#scenario-35)
+      - [Scenario 3.6](#scenario-36)
+      - [Scenario 3.7](#scenario-37)
+      - [Scenario 3.8](#scenario-38)
+      - [Scenario 3.9](#scenario-39)
+      - [Scenario 3.10](#scenario-310)
+    - [Use case 4, UC4 - Login](#use-case-4-uc4---login)
+      - [Scenario 4.1](#scenario-41)
+      - [Scenario 4.2](#scenario-42)
+      - [Scenario 4.3](#scenario-43)
+      - [Scenario 4.4](#scenario-44)
+    - [Use case 5, UC5 - Logout](#use-case-5-uc5---logout)
+      - [Scenario 5.1](#scenario-51)
+      - [Scenario 5.2](#scenario-52)
+    - [Use case 6, UC6 - Registration](#use-case-6-uc6---registration)
+      - [Scenario 6.1](#scenario-61)
+      - [Scenario 6.2](#scenario-62)
+      - [Scenario 6.3](#scenario-63)
+    - [Use case 7, UC7 - Manage roles](#use-case-7-uc7---manage-roles)
+      - [Scenario 7.1](#scenario-71)
+      - [Scenario 7.2](#scenario-72)
+    - [Use case 8, UC8 - Approve Manager account creation](#use-case-8-uc8---approve-manager-account-creation)
+      - [Scenario 8.1](#scenario-81)
+      - [Scenario 8.2](#scenario-82)
+    - [Use case 9, UC9 - Manage Users](#use-case-9-uc9---manage-users)
+      - [Scenario 9.1](#scenario-91)
+      - [Scenario 9.2](#scenario-92)
+    - [Use case 10, UC10 - Manage Product Categories](#use-case-10-uc10---manage-product-categories)
+      - [Scenario 10.1](#scenario-101)
+      - [Scenario 10.2](#scenario-102)
+      - [Scenario 10.3](#scenario-103)
+      - [Scenario 10.4](#scenario-104)
+      - [Scenario 10.5](#scenario-105)
+    - [Use case 11, UC11 - Review a Product](#use-case-11-uc11---review-a-product)
+      - [Scenario 11.1](#scenario-111-1)
+      - [Scenario 11.2](#scenario-112)
+      - [Scenario 11.3](#scenario-113)
 - [Glossary](#glossary)
 - [System Design](#system-design)
 - [Deployment Diagram](#deployment-diagram)
 
 # Informal description
 
-EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, confirm purchases, search for carts and exchange faulty products. Customers can see available products, add them to a cart, see the history of their past purchases, checkout their cart and decide whether to pay online or at pickup in the store and give reviews to products. 
+EZElectronics (read EaSy Electronics) is a software application designed to help managers of electronics stores to manage their products and offer them to customers through a dedicated website. Managers can assess the available products, record new ones, confirm purchases, search for carts, exchange faulty products and change product prices. Customers can see available products, add them to a cart, see the history of their past purchases, checkout their cart and decide whether to pay online or at pickup in the store and give reviews to products. 
 
 # Stakeholders
 
@@ -103,6 +158,7 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |  FR2.4.1  | This list can be filtered by: sold/not sold, a specific product, a specific category |
 |  FR2.5    | Delete a product |
 |  FR2.6    | Register the exchange of a faulty product |
+|  FR2.7    | Change Product prices |
 |  FR3      | Search carts |
 |  FR3.1    | Search carts by date or by user username, name or surname |
 |  FR3.2    | Access the status of the cart (checked-out/payed for/not checkd out) |
@@ -153,9 +209,9 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 | :--------------: | :------------------------------------------------------------------: |
 |   Precondition   | User is logged in as manager                                         |
 |  Post condition  | Product registered/arrival date set for a set of products/product marked as sold/show list of products/product deleted   |
-| Nominal Scenario | Scenario 1.1, 1.2, 1.3, 1.4, 1.5, 1.6                                     |
+| Nominal Scenario | Scenario 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7                           |
 |     Variants     | None                                                                 |
-|    Exceptions    | Scenario 1.7, 1.8, 1.9, 1.10                                          |
+|    Exceptions    | Scenario 1.8, 1.9, 1.10, 1.11                                        |
 
 ##### Scenario 1.1
 
@@ -220,25 +276,37 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: check that the provided code is present in the db, code already present, product deleted |
 
 ##### Scenario 1.6
-|  Scenario 1.5  |                                       Exchange Product                                                       |
+|  Scenario 1.6  |                                       Exchange Product                                                       |
 | :------------: | :------------------------------------------------------------------------:                                   |
 |  Precondition  | User logged in as manager                                                                                    |
-| Post condition |  Product marked as sold with observation of being an exchanged item                                          |
+| Post condition | Product marked as sold with observation of being an exchanged item                                           |
 |     Step#      |                                Description                                                                   |
 |       1        | User: ask to mark a product as exchanged                                                                     |
-|       2        | System: ask the code of the product                                                     |
-|       3        | User: provide the code of the product                                                 |
+|       2        | System: ask the code of the product                                                                          |
+|       3        | User: provide the code of the product                                                                        |
 |       4        | System: check that the provided code is present in the db, the code is already present                       |
-|       7        | System: exchange date is set as the current date, selling price is set at zero    |
-|       8        | System: check that the exchange date is after the arrival date, exchange date is after the arrival date      |
-|       9        | System: retrieve the exchange date of the product given the code, check if selling date is already present, selling date is not present, selling date for the product is updated as the exchange date|
-|       10       | System: set observation field of the product as "Exchanged"|
-
-
+|       5        | System: exchange date is set as the current date, selling price is set at zero                               |
+|       6        | System: check that the exchange date is after the arrival date, exchange date is after the arrival date      |
+|       7        | System: retrieve the exchange date of the product given the code, check if selling date is already present, selling date is not present, selling date for the product is updated as the exchange date|
+|       8        | System: set observation field of the product as "Exchanged"|
 
 
 ##### Scenario 1.7
-|  Scenario 1.7  |               Duplicate code for a product    (register a product)                                         |
+|  Scenario 1.7  |                                       Edit pruduc price                                                      |
+| :------------: | :------------------------------------------------------------------------:                                   |
+|  Precondition  | User logged in as manager                                                                                    |
+| Post condition | Product price is changed                                                                                     |
+|     Step#      |                                Description                                                                   |
+|       1        | User: ask to edit a product price                                                                            |
+|       2        | System: ask the code of the product                                                                          |
+|       3        | User: provide the code of the product                                                                        |
+|       4        | System: check that the provided code is present in the db, the code is already present                       |
+|       5        | System: Asks for new price for the product                                                                   |
+|       6        | User: Provides new price                                                                                     |
+|       7        | System: Updates the price for the product                                                                    |
+
+##### Scenario 1.8
+|  Scenario 1.8  |               Duplicate code for a product    (register a product)                                         |
 | :------------: | :------------------------------------------------------------------------:                                 |
 |  Precondition  | User logged in as manager                                                                                  |
 | Post condition | Product not registered                                                                                     |
@@ -249,8 +317,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: check that the provided code is not present in the db, code already present, product not registered|
 |       5        | System: show an error message                                                                              |
 
-##### Scenario 1.8
-|  Scenario 1.8  |                        Arrival date after current date                               |
+##### Scenario 1.9
+|  Scenario 1.9  |                        Arrival date after current date                               |
 | :------------: | :------------------------------------------------------------------------:           |
 |  Precondition  | User logged in as manager                                                            |
 | Post condition | Arrival date not set                                                                 |
@@ -261,8 +329,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: check that the provided date is not after the current date, provided date is after the current date, arrival date not set for set the of products|
 |       5        | System: show an error message                                                        |
 
-##### Scenario 1.9
-|  Scenario 1.9  |                    Mark product as sold (errors)                             |
+##### Scenario 1.10
+|  Scenario 1.10 |                    Mark product as sold (errors)                             |
 | :------------: | :------------------------------------------------------------------------:   |
 |  Precondition  | User logged in as manager                                                    |
 | Post condition | Product not marked as sold                                                   |
@@ -273,8 +341,8 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |       4        | System: run checks. The code is not present in the db OR selling date is after the current date OR selling date is before the arrival date OR selling date is already present in the db|
 |       5        | System: show an error message                                                |
 
-##### Scenario 1.10
-|  Scenario 1.10 |               Code is not present in the db (delete a product)                                 |
+##### Scenario 1.11
+|  Scenario 1.11 |               Code is not present in the db (delete a product)                                 |
 | :------------: | :------------------------------------------------------------------------:                     |
 |  Precondition  | User logged in as manager                                                                      |
 | Post condition | Product not deleted                                                                            |
