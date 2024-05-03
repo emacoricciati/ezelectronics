@@ -38,16 +38,50 @@ Consider the EZElectronics  project in CURRENT version (as given by the teachers
 | Plan Meeting   |    2      |
 |Writing requirements |  19  |
 |2nd Meeting     |   2       |
-|coding          |    70     |
-|GUI             |     5     |
+|  GUI         |    5    |
+|   coding         |  70        |
 |Unit Test       |     5     |
 |API Test        |     5     |
 |3rd Meeting     |     2     |
 |Management Documents|  5    |
-###
 
-# Gantt Chart
-![Gantt Chart](./images/GantChart.jpg)
+###
+```plantuml
+@startgantt
+Project starts 2024-04-10
+saturday are closed
+sunday are closed
+
+-- EZElectronics --
+[Plan Meeting] lasts 1 day
+
+[Writing Requirements] lasts 1 day
+[Writing Requirements] starts at [Plan Meeting]'s end
+[Requirement Docs] happens at [Writing Requirements]'s end
+
+[2nd Meeting] lasts 1 day
+[2nd Meeting] starts at [Writing Requirements]'s end
+
+[GUI] lasts 1 day
+[GUI] starts at [2nd Meeting]'s end
+
+[Coding] lasts 3 days
+[Coding] starts at [GUI]'s end
+
+[Unit Test] lasts 1 day
+[Unit Test] starts at [Coding]'s end
+
+[API Test] lasts 1 day
+[API Test] starts at [Unit Test]'s end
+
+[3rd Meeting] lasts 1 day
+[3rd Meeting] starts at [API Test]'s end
+[App Ready] happens at [3rd Meeting]'s end 
+
+[Management Documents] lasts 1 day
+[Management Documents] starts at [3rd Meeting]'s end
+@endgantt
+```
 # Summary
 
 The estimate is different depending on the different approaches used. This difference could be explained by the fact that the estimate by size approach does not take into account the preliminary work but rather the efforts made in the coding phase. It is therefore the least precise approach to estimate the effort unlike the estimate by activity decomposition one.
