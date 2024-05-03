@@ -326,7 +326,7 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 
 ##### Scenario 2.7
 
-|  Scenario 2.3  |                                       Cart not checked out (cart doesn't exist)                        |
+|  Scenario 2.7  |                                       Cart not checked out (cart doesn't exist)                        |
 | :------------: | :------------------------------------------------------------------------: |
 |  Precondition  | User logged in as customer |
 | Post condition |  Cart not checked out   |
