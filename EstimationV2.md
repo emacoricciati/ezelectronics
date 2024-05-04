@@ -1,5 +1,3 @@
-
-
 # Project Estimation - FUTURE
 Date:03-05-2024
 
@@ -49,7 +47,7 @@ Consider the EZElectronics  project in FUTURE version (as proposed by your team 
 
 
 ###
-plantuml
+```plantuml
 @startgantt
 Project starts 2024-04-10
 saturday are closed
@@ -85,7 +83,7 @@ sunday are closed
 [Management Documents] lasts 1 day
 [Management Documents] starts at [3rd Meeting]'s end
 @endgantt
-
+```
 # Summary
 The estimate is different depending on the different approaches used. This difference could be explained by the fact that the estimate by size approach does not take into account the preliminary work but rather the efforts made in the coding phase. It is therefore the least precise approach to estimate the effort unlike the estimate by activity decomposition one.
 
