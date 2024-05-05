@@ -15,10 +15,10 @@ Version: V2.8
 |  2.2           | Administrator role added                                   |
 |  2.3           | Products are associated with an image                      |
 |  2.4           | Managers can search for carts                              |
-|  2.5           | Return Faulty products functionality added                |
+|  2.5           | Return Faulty products functionality added                 |
 |  2.6           | Ratings and Reviews for products added                     |
 |  2.7           | Managers can change product prices                         |
-|  2.8           | List of reviews for a product added, new diagrams added, some fixes                     |
+|  2.8           | List of reviews for a product added, new diagrams added, some fixes|
 
 
 # Contents

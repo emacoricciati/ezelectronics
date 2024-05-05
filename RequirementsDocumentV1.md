@@ -28,12 +28,39 @@ Version: V1.5 - description of EZElectronics in CURRENT form (as received by tea
   - [Non Functional Requirements](#non-functional-requirements)
 - [Use case diagram and use cases](#use-case-diagram-and-use-cases)
   - [Use case diagram](#use-case-diagram)
-    - [Use case 1, UC1](#use-case-1-uc1)
+    - [Use case 1, UC1 - Manage products](#use-case-1-uc1---manage-products)
       - [Scenario 1.1](#scenario-11)
       - [Scenario 1.2](#scenario-12)
-      - [Scenario 1.x](#scenario-1x)
-    - [Use case 2, UC2](#use-case-2-uc2)
-    - [Use case x, UCx](#use-case-x-ucx)
+      - [Scenario 1.3](#scenario-13)
+      - [Scenario 1.4](#scenario-14)
+      - [Scenario 1.5](#scenario-15)
+      - [Scenario 1.6](#scenario-16)
+      - [Scenario 1.7](#scenario-17)
+      - [Scenario 1.8](#scenario-18)
+      - [Scenario 1.9](#scenario-19)
+    - [Use case 2, UC2 - Manage cart](#use-case-2-uc2---manage-cart)
+      - [Scenario 2.1](#scenario-21)
+      - [Scenario 2.2](#scenario-22)
+      - [Scenario 2.3](#scenario-23)
+      - [Scenario 2.4](#scenario-24)
+      - [Scenario 2.5](#scenario-25)
+      - [Scenario 2.6](#scenario-26)
+      - [Scenario 2.7](#scenario-27)
+      - [Scenario 2.8](#scenario-28)
+    - [Use case 3, UC3 - Login](#use-case-3-uc3---login)
+      - [Scenario 3.1](#scenario-31)
+      - [Scenario 3.2](#scenario-32)
+      - [Scenario 3.3](#scenario-33)
+      - [Scenario 3.4](#scenario-34)
+     - [Use case 4, UC4 - Logout](#use-case-4-uc4---logout)
+      - [Scenario 4.1](#scenario-41)
+      - [Scenario 4.2](#scenario-42)
+    - [Use case 5, UC5 - Registration](#use-case-5-uc5---registration)
+    - [Scenario 5.1](#scenario-51)
+    - [Scenario 5.2](#scenario-52)
+  - [Use case 6, UC6 - Manage roles](#use-case-6-uc6---manage-roles)
+    - [Scenario 6.1](#scenario-61)
+    - [Scenario 6.2](#scenario-62)
 - [Glossary](#glossary)
 - [System Design](#system-design)
 - [Deployment Diagram](#deployment-diagram)
@@ -46,7 +73,11 @@ EZElectronics (read EaSy Electronics) is a software application designed to help
 
 | Stakeholder name | Description |
 | :--------------: | :---------: |
-| Stakeholder x..  |             |
+| Customer         | Application user that intends on buying from the store by selecting the products, adding them to the cart and checkout the cart.|
+| Manager          | Application user responsible for managing the state of the App (list of products, product availability) and registering the sales in the app. |
+| Seller at Point Of Sale (POS)| Person responsible for managing the sale at the POS, by handing the bought items to the customer and receiving the payment. Can also be the manager, but not necessarily. |
+| Store Owner      | Owner of the electronics store who purchases the EZElectronics software in order to have a dedicated website facilitating its sales.|
+
 
 # Context Diagram and interfaces
 
@@ -469,6 +500,7 @@ Story: Anita is a regular customer of an electronic store and prefers to shop on
 |      3      |   User: provide username, name, surname, password, role                                              |
 |      4      |   System: check that the provided username isn't associated with any account yet. The username has been already used                                         |
 |      5      |   System: show an error message                                       |
+
 ### Use case 6, UC6 - Manage roles
 
 | Actors Involved  |                               User                                       |
