@@ -1,9 +1,9 @@
 # Graphical User Interface Prototype - FUTURE
 
-Authors:
+Authors: Emanuele Coricciati
 
-Date:
+Date: 03/05/2024
 
-Version:
+Version: 1
 
-\<Report here the GUI that you propose for EZElectronics in FUTURE form, as proposed by the team. You are free to organize it as you prefer. A suggested presentation matches the Use cases and scenarios defined in the Requirement document. The GUI can be shown as a sequence of graphical files (jpg, png) >
+![GUI Prototype V2](./images/GUIV2.pdf)
