@@ -1,9 +1,9 @@
 # Graphical User Interface Prototype - CURRENT
 
-Authors:
+Authors: Emanuele Coricciati
 
-Date:
+Date: 29/04/2024
 
-Version:
+Version: 1
 
-\<Report here the GUI that you propose for EZElectronics in CURRENT form, as received by teachers. You are free to organize it as you prefer. A suggested presentation matches the Use cases and scenarios defined in the Requirement document. The GUI can be shown as a sequence of graphical files (jpg, png) >
+![GUI Prototype V1](./images/GUIV1.pdf)
