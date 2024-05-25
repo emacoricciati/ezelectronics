@@ -4,7 +4,6 @@ import { body, param } from "express-validator"
 import { User } from "../components/user"
 import ErrorHandler from "../helper"
 import UserController from "../controllers/userController"
-import { Utility } from "../utilities"
 
 /**
  * Represents a class that defines the routes for handling users.

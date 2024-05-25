@@ -88,7 +88,7 @@ class UserDAO {
                         return
                     }
                     if (!row) {
-                        reject(new UserNotFoundError())
+                        reject(new UserNotFoundError)
                         return
                     }
                     const user: User = new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate)
@@ -114,10 +114,6 @@ class UserDAO {
                             reject(err)
                             return
                         }
-                        if (!rows) {
-                            reject(new UserNotFoundError())
-                            return
-                        }
                         const users: User[] = rows.map(row => {
                             return new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate);
                         })
@@ -141,10 +137,6 @@ class UserDAO {
                 db.all(sql, [role], (err: Error | null, rows: any[]) => {
                     if (err) {
                         reject(err)
-                        return
-                    }
-                    if (!rows) {
-                        reject(new UserNotFoundError())
                         return
                     }
 

@@ -23,7 +23,7 @@ class UserController {
      * @param role - The role of the new user. It must not be null and it can only be one of the three allowed types ("Manager", "Customer", "Admin")
      * @returns A Promise that resolves to true if the user has been created.
      */
-    async createUser(username: string, name: string, surname: string, password: string, role: string) /**:Promise<Boolean> */ {
+    async createUser(username: string, name: string, surname: string, password: string, role: string) :Promise<Boolean>  {
         return this.dao.createUser(username, name, surname, password, role)
     }
 
@@ -31,7 +31,7 @@ class UserController {
      * Returns all users.
      * @returns A Promise that resolves to an array of users.
      */
-    async getUsers() /**:Promise<User[]> */ { 
+    async getUsers() :Promise<User[]> { 
         return this.dao.getUsers();
     }
 
@@ -40,7 +40,7 @@ class UserController {
      * @param role - The role of the users to retrieve. It can only be one of the three allowed types ("Manager", "Customer", "Admin")
      * @returns A Promise that resolves to an array of users with the specified role.
      */
-    async getUsersByRole(role: string) /**:Promise<User[]> */ {
+    async getUsersByRole(role: string) :Promise<User[]> {
         return this.dao.getUsersByRole(role);
      }
 
@@ -52,16 +52,12 @@ class UserController {
      * @param username - The username of the user to retrieve. The user must exist.
      * @returns A Promise that resolves to the user with the specified username.
      */
-    async getUserByUsername(user: User, username: string) /**:Promise<User> */ {
-        try{
-            if(Utility.isAdmin(user) || user.username === username){
-                return this.dao.getUserByUsername(username);
-            }
-            else {
-                throw new UnauthorizedUserError;
-            }
-        } catch(err){
-            throw(err);
+    async getUserByUsername(user: User, username: string) :Promise<User> {
+        if(Utility.isAdmin(user) || user.username === username){
+            return this.dao.getUserByUsername(username);
+        }
+        else {
+            throw new UnauthorizedUserError;
         }
     }
 
@@ -73,26 +69,22 @@ class UserController {
      * @param username - The username of the user to delete. The user must exist.
      * @returns A Promise that resolves to true if the user has been deleted.
      */
-    async deleteUser(user: User, username: string) /**:Promise<Boolean> */ {
-        try{
-            if(!Utility.isAdmin(user) && username !== user.username){
-                throw new UnauthorizedUserError;
-            }
-            const toDelete = await this.dao.getUserByUsername(username);
-            if(Utility.isAdmin(toDelete) && user.username !== username){
-                throw new UserIsAdminError;
-            }
-            return this.dao.deleteUser(username);
-        }catch(err){
-            throw(err);
+    async deleteUser(user: User, username: string) :Promise<Boolean> {
+        if(!Utility.isAdmin(user) && username !== user.username){
+            throw new UnauthorizedUserError;
         }
+        const toDelete = await this.dao.getUserByUsername(username);
+        if(Utility.isAdmin(toDelete) && user.username !== username){
+            throw new UserIsAdminError;
+        }
+        return this.dao.deleteUser(username);
      }
 
     /**
      * Deletes all non-Admin users
      * @returns A Promise that resolves to true if all non-Admin users have been deleted.
      */
-    async deleteAll() { 
+    async deleteAll() : Promise<boolean> { 
         return this.dao.deleteAll();
     }
 
@@ -106,29 +98,25 @@ class UserController {
      * @param username The username of the user to update. It must be equal to the username of the user parameter.
      * @returns A Promise that resolves to the updated user
      */
-    async updateUserInfo(user: User, name: string, surname: string, address: string, birthdate: string, username: string) /**:Promise<User> */ { 
+    async updateUserInfo(user: User, name: string, surname: string, address: string, birthdate: string, username: string) :Promise<User> { 
 
-        try{
-            if(!Utility.isAdmin(user) && username !== user.username){
-                throw new UnauthorizedUserError;
-            }
-            const toUpdate = await this.dao.getUserByUsername(username);
-            if(Utility.isAdmin(toUpdate) && username !== user.username){
-                throw new UnauthorizedUserError;
-            }
-            const today = new Date();
-            const dateParts = birthdate.split("-");
-            const year = parseInt(dateParts[0], 10);
-            const month = parseInt(dateParts[1], 10) - 1;
-            const day = parseInt(dateParts[2], 10);
-            const date = new Date(year, month, day);
-            if(date > today){
-                throw new DateError;
-            }
-            return this.dao.updateUser(name, surname, address, birthdate, username, toUpdate.role);
-        }catch(err){
-            throw(err);
+        if(!Utility.isAdmin(user) && username !== user.username){
+            throw new UnauthorizedUserError;
         }
+        const toUpdate = await this.dao.getUserByUsername(username);
+        if(Utility.isAdmin(toUpdate) && username !== user.username){
+            throw new UnauthorizedUserError;
+        }
+        const today = new Date();
+        const dateParts = birthdate.split("-");
+        const year = parseInt(dateParts[0], 10);
+        const month = parseInt(dateParts[1], 10) - 1;
+        const day = parseInt(dateParts[2], 10);
+        const date = new Date(year, month, day);
+        if(date > today){
+            throw new DateError;
+        }
+        return this.dao.updateUser(name, surname, address, birthdate, username, toUpdate.role);
     }
 }
 

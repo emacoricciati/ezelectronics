@@ -1,4 +1,8 @@
+import { DateError } from "../utilities";
 import ProductDAO from "../dao/productDAO";
+import { Product } from "../components/product";
+import { EmptyProductStockError, LowProductStockError } from "../errors/productError";
+
 
 /**
  * Represents a controller for managing products.
@@ -21,7 +25,29 @@ class ProductController {
      * @param arrivalDate The optional date in which the product arrived.
      * @returns A Promise that resolves to nothing.
      */
-    async registerProducts(model: string, category: string, quantity: number, details: string | null, sellingPrice: number, arrivalDate: string | null) /**:Promise<void> */ { }
+    async registerProducts(model: string, category: string, quantity: number, details: string | null, sellingPrice: number, arrivalDate: string | null): Promise<void> { 
+
+        const today = new Date();
+        if(arrivalDate){
+            const dateParts = arrivalDate.split("-");
+            const year = parseInt(dateParts[0], 10);
+            const month = parseInt(dateParts[1], 10) - 1;
+            const day = parseInt(dateParts[2], 10);
+            const date = new Date(year, month, day);
+            if(date > today){
+                throw new DateError;
+            }
+        }
+        else {
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); 
+            const day = String(today.getDate()).padStart(2, '0');
+            arrivalDate = `${year}-${month}-${day}`;
+        }
+        
+        return this.dao.createProduct(model, category, quantity, details, sellingPrice, arrivalDate);
+
+    }
 
     /**
      * Increases the available quantity of a product through the addition of new units.
@@ -30,7 +56,35 @@ class ProductController {
      * @param changeDate The optional date in which the change occurred.
      * @returns A Promise that resolves to the new available quantity of the product.
      */
-    async changeProductQuantity(model: string, newQuantity: number, changeDate: string | null) /**:Promise<number> */ { }
+    async changeProductQuantity(model: string, newQuantity: number, changeDate: string | null) :Promise<number> { 
+
+        const products: Product[] = await this.dao.getProducts('model',model);
+        const toUpdate = products[0];
+        const arrivalDate = toUpdate.arrivalDate;
+        const today = new Date();
+        console.log(changeDate);
+        if(changeDate){
+            const dateParts = changeDate.split("-");
+            const year = parseInt(dateParts[0], 10);
+            const month = parseInt(dateParts[1], 10) - 1;
+            const day = parseInt(dateParts[2], 10);
+            const date = new Date(year, month, day);
+            if(date > today){
+                throw new DateError;
+            }
+            if(changeDate < arrivalDate ){
+                throw new DateError;
+            }
+        }
+        else {
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); 
+            const day = String(today.getDate()).padStart(2, '0');
+            changeDate = `${year}-${month}-${day}`;
+        }
+        return this.dao.updateProduct(model,newQuantity,'add');
+        
+    }
 
     /**
      * Decreases the available quantity of a product through the sale of units.
@@ -39,7 +93,41 @@ class ProductController {
      * @param sellingDate The optional date in which the sale occurred.
      * @returns A Promise that resolves to the new available quantity of the product.
      */
-    async sellProduct(model: string, quantity: number, sellingDate: string | null) /**:Promise<number> */ { }
+    async sellProduct(model: string, quantity: number, sellingDate: string | null) :Promise<number> {
+
+        const products: Product[] = await this.dao.getProducts('model',model);
+        const toSell = products[0];
+        const actualQuantity = toSell.quantity;
+        if(actualQuantity === 0){
+            throw new EmptyProductStockError;
+        }
+        else if(actualQuantity < quantity){
+            throw new LowProductStockError;
+        }
+        const arrivalDate = toSell.arrivalDate;
+        const today = new Date();
+        if(sellingDate){
+            const dateParts = sellingDate.split("-");
+            const year = parseInt(dateParts[0], 10);
+            const month = parseInt(dateParts[1], 10) - 1;
+            const day = parseInt(dateParts[2], 10);
+            const date = new Date(year, month, day);
+            if(date > today){
+                throw new DateError;
+            }
+            if(sellingDate < arrivalDate){
+                throw new DateError;
+            }
+        }
+        else {
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); 
+            const day = String(today.getDate()).padStart(2, '0');
+            sellingDate = `${year}-${month}-${day}`;
+        }
+        return this.dao.updateProduct(model,quantity,'subtract');
+
+     }
 
     /**
      * Returns all products in the database, with the option to filter them by category or model.
@@ -48,7 +136,19 @@ class ProductController {
      * @param model An optional parameter. It can only be present if grouping is equal to "model" (in which case it must be present and not empty).
      * @returns A Promise that resolves to an array of Product objects.
      */
-    async getProducts(grouping: string | null, category: string | null, model: string | null) /**Promise<Product[]> */ { }
+    async getProducts(grouping: string | null, category: string | null, model: string | null) :Promise<Product[]> { 
+
+        if(grouping && category){
+            return this.dao.getProducts('category', category);
+        }
+        else if(grouping && model){
+            return this.dao.getProducts('model', model);
+        }
+        else {
+            return this.dao.getProducts('all');
+        }
+        
+    }
 
     /**
      * Returns all available products (with a quantity above 0) in the database, with the option to filter them by category or model.
@@ -57,13 +157,26 @@ class ProductController {
      * @param model An optional parameter. It can only be present if grouping is equal to "model" (in which case it must be present and not empty).
      * @returns A Promise that resolves to an array of Product objects.
      */
-    async getAvailableProducts(grouping: string | null, category: string | null, model: string | null) /**:Promise<Product[]> */ { }
+    async getAvailableProducts(grouping: string | null, category: string | null, model: string | null) :Promise<Product[]> {
+
+        if(grouping && category){
+            return this.dao.getAvailableProducts('category', category);
+        }
+        else if(grouping && model){
+            return this.dao.getAvailableProducts('model', model);
+        }
+        else {
+            return this.dao.getAvailableProducts('all');
+        }
+     }
 
     /**
      * Deletes all products.
      * @returns A Promise that resolves to `true` if all products have been successfully deleted.
      */
-    async deleteAllProducts() /**:Promise <Boolean> */ { }
+    async deleteAllProducts() :Promise <Boolean> { 
+        return this.dao.deleteAll();
+    }
 
 
     /**
@@ -71,7 +184,11 @@ class ProductController {
      * @param model The model of the product to delete
      * @returns A Promise that resolves to `true` if the product has been successfully deleted.
      */
-    async deleteProduct(model: string) /**:Promise <Boolean> */ { }
+    async deleteProduct(model: string) :Promise <Boolean> { 
+        const products: Product[] = await this.dao.getProducts('model', model);
+        const toDelete = products[0];
+        return this.dao.deleteProduct(toDelete.model);
+    }
 
 }
 
