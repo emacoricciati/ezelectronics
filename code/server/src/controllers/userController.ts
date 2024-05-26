@@ -107,13 +107,8 @@ class UserController {
         if(Utility.isAdmin(toUpdate) && username !== user.username){
             throw new UnauthorizedUserError;
         }
-        const today = new Date();
-        const dateParts = birthdate.split("-");
-        const year = parseInt(dateParts[0], 10);
-        const month = parseInt(dateParts[1], 10) - 1;
-        const day = parseInt(dateParts[2], 10);
-        const date = new Date(year, month, day);
-        if(date > today){
+        const today = new Date().toISOString().slice(0,10);
+        if(birthdate > today){
             throw new DateError;
         }
         return this.dao.updateUser(name, surname, address, birthdate, username, toUpdate.role);

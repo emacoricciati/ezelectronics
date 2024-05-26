@@ -27,24 +27,15 @@ class ProductController {
      */
     async registerProducts(model: string, category: string, quantity: number, details: string | null, sellingPrice: number, arrivalDate: string | null): Promise<void> { 
 
-        const today = new Date();
+        const today = new Date().toISOString().slice(0,10);
         if(arrivalDate){
-            const dateParts = arrivalDate.split("-");
-            const year = parseInt(dateParts[0], 10);
-            const month = parseInt(dateParts[1], 10) - 1;
-            const day = parseInt(dateParts[2], 10);
-            const date = new Date(year, month, day);
-            if(date > today){
+            if(arrivalDate > today){
                 throw new DateError;
             }
         }
         else {
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0'); 
-            const day = String(today.getDate()).padStart(2, '0');
-            arrivalDate = `${year}-${month}-${day}`;
+            arrivalDate = today;
         }
-        
         return this.dao.createProduct(model, category, quantity, details, sellingPrice, arrivalDate);
 
     }
@@ -61,15 +52,9 @@ class ProductController {
         const products: Product[] = await this.dao.getProducts('model',model);
         const toUpdate = products[0];
         const arrivalDate = toUpdate.arrivalDate;
-        const today = new Date();
-        console.log(changeDate);
+        const today = new Date().toISOString().slice(0,10);
         if(changeDate){
-            const dateParts = changeDate.split("-");
-            const year = parseInt(dateParts[0], 10);
-            const month = parseInt(dateParts[1], 10) - 1;
-            const day = parseInt(dateParts[2], 10);
-            const date = new Date(year, month, day);
-            if(date > today){
+            if(changeDate > today){
                 throw new DateError;
             }
             if(changeDate < arrivalDate ){
@@ -77,10 +62,7 @@ class ProductController {
             }
         }
         else {
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0'); 
-            const day = String(today.getDate()).padStart(2, '0');
-            changeDate = `${year}-${month}-${day}`;
+            changeDate = today;
         }
         return this.dao.updateProduct(model,newQuantity,'add');
         
@@ -105,14 +87,9 @@ class ProductController {
             throw new LowProductStockError;
         }
         const arrivalDate = toSell.arrivalDate;
-        const today = new Date();
+        const today = new Date().toISOString().slice(0,10);
         if(sellingDate){
-            const dateParts = sellingDate.split("-");
-            const year = parseInt(dateParts[0], 10);
-            const month = parseInt(dateParts[1], 10) - 1;
-            const day = parseInt(dateParts[2], 10);
-            const date = new Date(year, month, day);
-            if(date > today){
+            if(sellingDate > today){
                 throw new DateError;
             }
             if(sellingDate < arrivalDate){
@@ -120,10 +97,7 @@ class ProductController {
             }
         }
         else {
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0'); 
-            const day = String(today.getDate()).padStart(2, '0');
-            sellingDate = `${year}-${month}-${day}`;
+            sellingDate = today;
         }
         return this.dao.updateProduct(model,quantity,'subtract');
 
