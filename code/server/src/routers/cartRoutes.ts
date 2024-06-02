@@ -50,6 +50,7 @@ class CartRoutes {
          */
         this.router.get(
             "/",
+            this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.getCart(req.user)
@@ -70,6 +71,7 @@ class CartRoutes {
          */
         this.router.post(
             "/",
+            this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             body("model").isString().isLength({min: 1}),
             this.errorHandler.validateRequest,
@@ -88,6 +90,7 @@ class CartRoutes {
          */
         this.router.patch(
             "/",
+            this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.checkoutCart(req.user)
@@ -104,6 +107,7 @@ class CartRoutes {
          */
         this.router.get(
             "/history",
+            this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.getCustomerCarts(req.user)
@@ -119,6 +123,7 @@ class CartRoutes {
          */
         this.router.delete(
             "/products/:model",
+            this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             param("model").isString().isLength({min: 1}),
             this.errorHandler.validateRequest,
@@ -137,6 +142,7 @@ class CartRoutes {
          */
         this.router.delete(
             "/current",
+            this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.clearCart(req.user)
@@ -151,6 +157,7 @@ class CartRoutes {
          */
         this.router.delete(
             "/",
+            this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             this.errorHandler.validateRequest,
             (_: any, res: any, next: any) => this.controller.deleteAllCarts()
@@ -165,6 +172,7 @@ class CartRoutes {
          */
         this.router.get(
             "/all",
+            this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             this.errorHandler.validateRequest,
             (_: any, res: any, next: any) => this.controller.getAllCarts()

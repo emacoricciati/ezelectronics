@@ -58,6 +58,7 @@ class ProductRoutes {
          */
         this.router.post(
             "/",
+            this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             body("model").isString().isLength({min: 1}),
             body("category").isIn(["Smartphone", "Laptop", "Appliance"]),
@@ -87,6 +88,7 @@ class ProductRoutes {
          */
         this.router.patch(
             "/:model",
+            this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             param("model").isString().isLength({min: 1}),
             body("quantity").isInt({gt: 0}),
@@ -113,6 +115,7 @@ class ProductRoutes {
          */
         this.router.patch(
             "/:model/sell",
+            this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             param("model").isString().isLength({min: 1}),
             body("sellingDate").optional().custom((value) => {
@@ -142,6 +145,7 @@ class ProductRoutes {
          */
         this.router.get(
             "/",
+            this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             query("grouping").optional().isIn([null,"category", "model"]),
             query("category").optional().isIn(["Smartphone","Laptop","Appliance"]).custom((value, { req }) => {
@@ -239,6 +243,7 @@ class ProductRoutes {
          */
         this.router.delete(
             "/",
+            this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             this.errorHandler.validateRequest,
             (_: any, res: any, next: any) => this.controller.deleteAllProducts()
@@ -254,6 +259,7 @@ class ProductRoutes {
          */
         this.router.delete(
             "/:model",
+            this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             param("model").isString().isLength({min:1}),
             this.errorHandler.validateRequest,

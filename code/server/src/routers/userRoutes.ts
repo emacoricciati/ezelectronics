@@ -76,6 +76,7 @@ class UserRoutes {
          */
         this.router.get(
             "/",
+            this.authService.isLoggedIn,
             this.authService.isAdmin,
             this.errorHandler.validateRequest,
             (_, res: any, next: any) => this.controller.getUsers()
@@ -91,6 +92,7 @@ class UserRoutes {
          */
         this.router.get(
             "/roles/:role",
+            this.authService.isLoggedIn,
             this.authService.isAdmin,
             param("role").isString().isIn(["Manager","Customer","Admin"]),
             this.errorHandler.validateRequest,
@@ -138,6 +140,7 @@ class UserRoutes {
          */
         this.router.delete(
             "/",
+            this.authService.isLoggedIn,
             this.authService.isAdmin,
             this.errorHandler.validateRequest,
             (_, res: any, next: any) => this.controller.deleteAll()

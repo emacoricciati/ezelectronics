@@ -36,6 +36,7 @@ class ReviewRoutes {
          */
         this.router.post(
             "/:model",
+            this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             param("model").isString().isLength({min: 1}),
             body("score").isInt({min: 1, max: 5}),
@@ -73,6 +74,7 @@ class ReviewRoutes {
          */
         this.router.delete(
             "/:model",
+            this.authenticator.isLoggedIn,
             this.authenticator.isCustomer,
             this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.deleteReview(req.params.model, req.user)
@@ -91,6 +93,7 @@ class ReviewRoutes {
          */
         this.router.delete(
             "/:model/all",
+            this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.deleteReviewsOfProduct(req.params.model)
@@ -105,6 +108,7 @@ class ReviewRoutes {
          */
         this.router.delete(
             "/",
+            this.authenticator.isLoggedIn,
             this.authenticator.isAdminOrManager,
             this.errorHandler.validateRequest,
             (_: any, res: any, next: any) => this.controller.deleteAllReviews()
