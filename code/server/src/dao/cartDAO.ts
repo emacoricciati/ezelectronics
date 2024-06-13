@@ -163,7 +163,7 @@ class CartDAO {
         })
     }
 
-    async addToCart(username: string, product:Product){
+    async addToCart(username: string, product:Product): Promise<Boolean>{
         try{
             const cartId = await this.getCurrentCartId(username);
             if(cartId === -1){
@@ -189,7 +189,6 @@ class CartDAO {
             const sql = "UPDATE carts SET paid = 1, paymentDate = ? WHERE customer = ? AND paid=0"
             db.run(sql, [paymentDate,username], async (err: Error | null) => {
                 if (err) {
-                    console.log('here');
                     reject(err)
                     return
                 }

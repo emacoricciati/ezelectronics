@@ -68,7 +68,7 @@ class ReviewDAO {
         })
     }
 
-    async deleteUserReview(model: string, username: string){
+    async deleteUserReview(model: string, username: string): Promise<void>{
         try{
             const _ = await this.getUserReviewForAProduct(model, username);
             return this.deleteReviews(model, username);

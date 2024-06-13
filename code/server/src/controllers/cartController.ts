@@ -55,7 +55,6 @@ class CartController {
 
         const today = new Date();
         const paymentDate = today.toISOString().slice(0,10);
-        console.log(paymentDate);
         const productController = new ProductController();
         const currentCart = await this.dao.getCurrentCart(user.username);
         const cartId = await this.dao.getCurrentCartId(user.username);
