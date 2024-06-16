@@ -15,7 +15,7 @@
 
 # Dependency graph
 
-     <report the here the dependency graph of EzElectronics>
+![Dependency_graph](./images/Dependency_graph.png)
 
 # Integration approach
 
@@ -440,3 +440,5 @@
 ## Coverage white box
 
 Report here the screenshot of coverage values obtained with jest-- coverage
+
+![Coverage](./images/coverage.jpeg)
