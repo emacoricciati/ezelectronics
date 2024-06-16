@@ -19,13 +19,35 @@
 
 # Integration approach
 
-    <Write here the integration sequence you adopted, in general terms (top down, bottom up, mixed) and as sequence
+  The integration sequence adopted follows a bottom-up approach, starting from testing units with no outgoing dependencies. These units are tested in isolation using unit testing techniques. Once they are tested, they become 'trusted' units. Subsequently, other units with outgoing dependencies to the trusted units are integrated with them, and the partial aggregates are tested. The last step is a full integration, including API testing.
 
-    (ex: step1: unit A, step 2: unit A+B, step 3: unit A+B+C, etc)>
+**Step 1: Unit Testing**
+1. **Unit User**
+   - Test in isolation using unit testing techniques.
+2. **Unit Product**
+   - Test in isolation using unit testing techniques.
+3. **Unit Cart**
+   - Test in isolation using unit testing techniques.
+4. **Unit Review**
+   - Test in isolation using unit testing techniques.
 
-    <Some steps may  correspond to unit testing (ex step1 in ex above)>
+**Step 2: Partial Integration**
+1. **Unit User + Authentication**
+   - Integrate `User` and authentication and test their combined behavior (login, logout and session).
 
-    <One step will  correspond to API testing, or testing unit route.js>
+**Step 3: Incremental Integration**
+1. **Unit User + Product**
+   - Integrate `Product` with `User`. Test the system to verify that user with the role of admin or manager can add/update/delete products in the store.
+2. **Unit User + Product + Cart**
+   - Integrate `Cart` with `User` and `Product`. Test the system to verify that a user with the role of customer can add/delete specific products to the cart.
+3. **Unit User + Product + Review**
+   - Integrate `Review` with `User` and `Product`. Test the system to verify that a user with the role of customer can leave reviews for products they have purchased, and that a user with the role of admin or manager can delete reviews for a specific product or all reviews in general.
+
+**Step 4: Full Integration and API testing**
+1. **Unit User + Product + Cart + Review**
+   - Integrate all units together and test the complete system.
+   - Test the `route.ts` API endpoint to ensure all system operations work correctly through the API.
+
 
 # Tests
 
