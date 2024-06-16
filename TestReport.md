@@ -395,43 +395,43 @@
 | Functional Requirement or scenario | Test(s) |
 | :--------------------------------: | :-----: |
 | **FR1**                            |                       **Manage account**                       |
-|  FR1.1                             |                                                           |
-|  FR1.2                             |                                                           |
+|  FR1.1                             |        Test : Integration Test POST /users                     |
+|  FR1.2                             |                                                                |
 |  FR1.3                             |                   Create a new user account                    |
 | **FR2**                            |                        **Manage users**                        |
-|  FR2.1                             |                   Show the list of all users                   |
-|  FR2.2                             |        Show the list of all users with a specific role         |
-|  FR2.3                             |             Show the information of a single user              |
-|  FR2.4                             |            Update the information of a single user             |
-|  FR2.5                             |                Delete a single _non Admin_ user                |
-|  FR2.6                             |                  Delete all _non Admin_ users                  |
+|  FR2.1                             |              Test : Integration Test   GET /users            |
+|  FR2.2                             |        Test : Integration Test GET /users/roles/:role          |
+|  FR2.3                             |           Test : Integration Test GET /users/:username         |
+|  FR2.4                             |           Test : Integration Test PATCH /users/:username       |
+|  FR2.5                             |            Test : Integration Test DELETE /users/:username     |
+|  FR2.6                             |         Test : Integration Test DELETE /users                  |
 | **FR3**                            |                      **Manage products**                       |
-|  FR3.1                             |                 Register a set of new products                 |
-|  FR3.2                             |                Update the quantity of a product                |
-|  FR3.3                             |                         Sell a product                         |
-|  FR3.4                             |                 Show the list of all products                  |
-| FR3.4.1                            |            Show the list of all available products             |
-|  FR3.5                             |      Show the list of all products with the same category      |
-| FR3.5.1                            | Show the list of all available products with the same category |
-|  FR3.5                             |       Show the list of all products with the same model        |
-| FR3.5.1                            |  Show the list of all available products with the same model   |
-|  FR3.7                             |                        Delete a product                        |
-|  FR3.8                             |                      Delete all products                       |
+|  FR3.1                             |         Test : Integration Test POST /products                 |
+|  FR3.2                             |        Test : Integration Test  PATCH /products/               |
+|  FR3.3                             |     Test : Integration Test  PATCH /products/:model/sell       |
+|  FR3.4                             |       Test : Integration Test  GET /products                   |
+| FR3.4.1                            |           Test : Integration Test GET /products/available      |
+|  FR3.5                             | Test : Integration Test  GET /products                         |
+| FR3.5.1                            | Test : Integration Test  GET /products/available               |
+|  FR3.5                             |     Test : Integration Test GET /products                      |
+| FR3.5.1                            |  Test : Integration Test  PATCH /products/:model               |
+|  FR3.7                             |    Test : Integration Test DELETE /products/:model             |
+|  FR3.8                             |      Test : Integration Test  DELETE /products                 |
 | **FR4**                            |                       **Manage reviews**                       |
-|  FR4.1                             |                 Add a new review to a product                  |
-|  FR4.2                             |       Get the list of all reviews assigned to a product        |
-|  FR4.3                             |               Delete a review given to a product               |
-|  FR4.4                             |                Delete all reviews of a product                 |
-|  FR4.5                             |               Delete all reviews of all products               |
+|  FR4.1                             |            Test : Integration Test POST /reviews/:model        |
+|  FR4.2                             |      Test : Integration Test GET /reviews/:model               |
+|  FR4.3                             |              Test : Integration Test DELETE /reviews/:model    |
+|  FR4.4                             |              Test : Integration Test  DELETE /reviews          |
+|  FR4.5                             |      Test : Integration Test DELETE /reviews/:model/all        |
 | **FR5**                            |                        **Manage carts**                        |
-|  FR5.1                             |            Show the information of the current cart            |
-|  FR5.2                             |               Add a product to the current cart                |
-|  FR5.3                             |                   Checkout the current cart                    |
-|  FR5.4                             |               Show the history of the paid carts               |
-|  FR5.5                             |             Remove a product from the current cart             |
-|  FR5.6                             |                    Delete the current cart                     |
-|  FR5.7                             |             See the list of all carts of all users             |
-|  FR5.8                             |                        Delete all carts                        |
+|  FR5.1                             |            Test : Integration TestGET /carts                   |
+|  FR5.2                             |               Test : Integration Test POST /carts              |
+|  FR5.3                             |                 Test : Integration Test  PATCH /carts          |
+|  FR5.4                             |              Test : Integration Test GET /carts/history        |
+|  FR5.5                             |      Test : Integration Test  DELETE /carts/products/:model    |
+|  FR5.6                             |          Test : Integration Test  DELETE /carts/current        |
+|  FR5.7                             |            Test : Integration Test GET /carts                  |
+|  FR5.8                             |  Test : Integration Test  DELETE /carts       |
 
 
 
