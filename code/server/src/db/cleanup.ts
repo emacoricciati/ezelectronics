@@ -7,10 +7,25 @@ import db from "../db/db";
  * This function must be called before any integration test, to ensure a clean database state for each test run.
  */
 
-export function cleanup() {
-    db.serialize(() => {
+export async function cleanup() {
+
+        const runAsync = (sql : any): Promise<void> => {
+                return new Promise((resolve, reject) => {
+                  db.run(sql, (err) => {
+                    if (err) {
+                      reject(err);
+                    } else {
+                      resolve();
+                    }
+                  });
+                });
+              };
         // Delete all data from the database.
-        db.run("DELETE FROM users")
+        await runAsync("DELETE FROM users")
+        await runAsync("DELETE FROM products")
+        await runAsync("DELETE FROM products_in_carts")
+        await runAsync("DELETE FROM carts")
+        await runAsync("DELETE FROM reviews")
+        await runAsync("DELETE FROM sqlite_sequence")
         //Add delete statements for other tables here
-    })
 }

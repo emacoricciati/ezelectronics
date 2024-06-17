@@ -1,5 +1,5 @@
 import db from "../db/db"
-import { User } from "../components/user"
+import { Role, User } from "../components/user"
 import crypto from "crypto"
 import { UserAlreadyExistsError, UserNotFoundError } from "../errors/userError";
 
@@ -88,7 +88,7 @@ class UserDAO {
                         return
                     }
                     if (!row) {
-                        reject(new UserNotFoundError())
+                        reject(new UserNotFoundError)
                         return
                     }
                     const user: User = new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate)
@@ -98,6 +98,121 @@ class UserDAO {
                 reject(error)
             }
 
+        })
+    }
+
+    /**
+     * Returns all users object from the database.
+     * @returns A Promise that resolves the information of all the users
+     */
+         getUsers(): Promise<User[]> {
+            return new Promise<User[]>((resolve, reject) => {
+                try {
+                    const sql = "SELECT * FROM users"
+                    db.all(sql, (err: Error | null, rows: any[]) => {
+                        if (err) {
+                            reject(err)
+                            return
+                        }
+                        const users: User[] = rows.map(row => {
+                            return new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate);
+                        })
+                        resolve(users)
+                    })
+                } catch (error) {
+                    reject(error)
+                }
+    
+            })
+        }
+    /**
+     * Returns all users object from the database based on the role.
+     * @param role The role of the users to retrieve
+     * @returns A Promise that resolves the information of the requested user
+     */
+     getUsersByRole(role: string): Promise<User[]> {
+        return new Promise<User[]>((resolve, reject) => {
+            try {
+                const sql = "SELECT * FROM users WHERE role = ?"
+                db.all(sql, [role], (err: Error | null, rows: any[]) => {
+                    if (err) {
+                        reject(err)
+                        return
+                    }
+
+                    const users: User[] = rows.map(row => {
+                        return new User(row.username, row.name, row.surname, row.role, row.address, row.birthdate);
+                    })
+                    resolve(users)
+                })
+            } catch (error) {
+                reject(error)
+            }
+
+        })
+    }
+    /**
+     * Delete a specific user identified by the username 
+     * @param username The username of the user. It must be unique.
+     * @returns A Promise that resolves to true if the user has been deleted.
+     */
+     deleteUser(username: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            try {
+                const sql = "DELETE FROM users WHERE username = ?"
+                db.run(sql, [username], (err: Error | null) => {
+                    if (err) {
+                        reject(err)
+                        return
+                    }
+                    resolve(true)
+                })
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+
+    /**
+     * Delete all non-Admin users from the database
+     * @returns A Promise that resolves to true if all users have been deleted.
+     */
+    deleteAll(): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            try {
+                const sql = "DELETE FROM users WHERE role = 'Customer' OR role = 'Manager'"
+                db.run(sql, (err: Error | null) => {
+                    if (err) {
+                        reject(err)
+                        return
+                    }
+                    resolve(true)
+                })
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+
+    /**
+     * Update personal information of a single user
+     * @returns A Promise that resolves the new information of the updated user
+     */
+    updateUser(name: string, surname: string, address: string, birthdate: string, username: string, role: Role): Promise<User> {
+        return new Promise<User>((resolve, reject) => {
+            try {
+                const sql = "UPDATE users SET name = ?, surname = ?, address = ?, birthdate = ? WHERE username = ?"
+                db.run(sql, [name, surname, address, birthdate, username], (err: Error | null) => {
+                    if (err) {
+                        reject(err)
+                        return
+                    }
+                    const updatedUser: User  = new User(username, name, surname, role, address, birthdate);
+                    resolve(updatedUser)
+                })
+            } catch (error) {
+                reject(error)
+            }
         })
     }
 }
