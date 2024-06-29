@@ -407,7 +407,7 @@ describe("Cart routes integration tests", () => {
       await request(app)
         .delete(`${routePath}/carts/products/test1`)
         .set("Cookie", customerCookie)
-        .expect(400);
+        .expect(404);
     });
     test("It should return a 404 error code if the product is not in the cart", async () => {
       // add a new product in the cart

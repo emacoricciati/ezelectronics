@@ -327,6 +327,9 @@ describe("Product controller", () => {
       jest
         .spyOn(ProductDao.prototype, "getAvailableProducts")
         .mockResolvedValueOnce(products);
+      jest
+        .spyOn(ProductDao.prototype, "getProducts")
+        .mockResolvedValueOnce(products);
       const controller = new ProductController();
       const response = await controller.getAvailableProducts(
         grouping,

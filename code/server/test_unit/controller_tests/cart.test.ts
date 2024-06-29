@@ -14,7 +14,7 @@ import { ProductSoldError } from "../../src/errors/productError";
 import { Role, User } from "../../src/components/user";
 import CartDAO from "../../src/dao/cartDAO";
 import { CartNotFoundError, EmptyCartError } from "../../src/errors/cartError";
-import { ProductInCart } from "../../src/components/cart";
+import { Cart, ProductInCart } from "../../src/components/cart";
 jest.mock("../../src/dao/userDAO");
 
 const testCustomer = new User(
@@ -213,7 +213,7 @@ describe("Cart controller", () => {
       const controller = new CartController();
       await expect(
         controller.removeProductFromCart(testCustomer, product.model)
-      ).rejects.toThrow(EmptyCartError);
+      ).rejects.toThrow(CartNotFoundError);
       expect(CartDAO.prototype.removeFromCart).not.toHaveBeenCalled();
     });
   });

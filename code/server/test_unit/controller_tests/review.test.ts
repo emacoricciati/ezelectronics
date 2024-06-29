@@ -64,9 +64,12 @@ describe("Review controller", () => {
   });
   describe("getProductReviews", () => {
     test("It should return an array of reviews", async () => {
-        jest
+      jest
         .spyOn(ReviewDAO.prototype, "getReviewsForAProduct")
         .mockResolvedValue(reviews);
+      jest
+        .spyOn(ProductDao.prototype, "getProducts")
+        .mockResolvedValue(products);
       const controller = new ReviewController();
       const response = await controller.getProductReviews(product.model);
       expect(ReviewDAO.prototype.getReviewsForAProduct).toHaveBeenCalledTimes(1);

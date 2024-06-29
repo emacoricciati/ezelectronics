@@ -17,7 +17,7 @@ const product = {
 
 const review = {
   score: 5,
-  comment: "",
+  comment: "review",
 };
 
 //Default user information. We use them to create users and evaluate the returned values

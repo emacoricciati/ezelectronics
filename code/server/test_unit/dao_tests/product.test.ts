@@ -216,7 +216,7 @@ describe("productDAO", () => {
       expect(result).toEqual(products);
       mockDBRun.mockRestore();
     });
-    test("It should throw an error, product not found", async () => {
+    test("It should return an empty array, product unavailable", async () => {
       const productDAO = new ProductDAO();
       const mockDBRun = jest
         .spyOn(db, "all")
@@ -224,9 +224,8 @@ describe("productDAO", () => {
           callback(null, []);
           return {} as Database;
         });
-      await expect(productDAO.getAvailableProducts("model")).rejects.toThrow(
-        ProductNotFoundError
-      );
+      const result = await (productDAO.getAvailableProducts("model"));
+      expect(result).toEqual([]);
       mockDBRun.mockRestore();
     });
     test("It should throw an error", async () => {
