@@ -132,15 +132,20 @@ class ProductController {
      * @returns A Promise that resolves to an array of Product objects.
      */
     async getAvailableProducts(grouping: string | null, category: string | null, model: string | null) :Promise<Product[]> {
-
-        if(grouping && category){
-            return this.dao.getAvailableProducts('category', category);
-        }
-        else if(grouping && model){
-            return this.dao.getAvailableProducts('model', model);
-        }
-        else {
-            return this.dao.getAvailableProducts('all');
+        try{
+            if(grouping && category){
+                return this.dao.getAvailableProducts('category', category);
+            }
+            else if(grouping && model){
+                await this.dao.getProducts("model", model);
+                return this.dao.getAvailableProducts('model', model);
+            }
+            else {
+                
+                return this.dao.getAvailableProducts('all');
+            }
+        }catch(e){
+            throw e;
         }
      }
 

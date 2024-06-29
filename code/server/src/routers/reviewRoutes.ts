@@ -40,7 +40,7 @@ class ReviewRoutes {
             this.authenticator.isCustomer,
             param("model").isString().isLength({min: 1}),
             body("score").isInt({min: 1, max: 5}),
-            body("comment").isString(),
+            body("comment").isString().isLength({min: 1}),
             this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.addReview(req.params.model, req.user, req.body.score, req.body.comment)
                 .then(() => res.status(200).send())

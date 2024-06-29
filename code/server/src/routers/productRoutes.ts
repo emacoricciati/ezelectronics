@@ -69,7 +69,8 @@ class ProductRoutes {
                 if (value !== null && !(/^\d{4}-\d{2}-\d{2}$/.test(value))) {
                     return false;
                 }
-                return true;
+                const date = new Date(value);
+                return !isNaN(date.getTime());
             }),
             this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.registerProducts(req.body.model, req.body.category, req.body.quantity, req.body.details, req.body.sellingPrice, req.body.arrivalDate)
@@ -96,7 +97,8 @@ class ProductRoutes {
                 if (value !== null && !(/^\d{4}-\d{2}-\d{2}$/.test(value))) {
                     return false;
                 }
-                return true;
+                const date = new Date(value);
+                return !isNaN(date.getTime());
             }),
             this.errorHandler.validateRequest,
             (req: any, res: any, next: any) => this.controller.changeProductQuantity(req.params.model, req.body.quantity, req.body.changeDate)
@@ -122,7 +124,8 @@ class ProductRoutes {
                 if (value !== null && !(/^\d{4}-\d{2}-\d{2}$/.test(value))) {
                     return false;
                 }
-                return true;
+                const date = new Date(value);
+                return !isNaN(date.getTime());
             }),
             body("quantity").isInt({gt: 0}),
             this.errorHandler.validateRequest,

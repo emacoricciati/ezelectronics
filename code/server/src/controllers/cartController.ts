@@ -92,11 +92,8 @@ class CartController {
         const productsInfo = await productController.getProducts('model', null, product);
         const currentCart = await this.dao.getCurrentCart(user.username);
         const cartId = await this.dao.getCurrentCartId(user.username);
-        if(cartId === -1){
+        if(cartId === -1 || !currentCart.products.length){
             throw new CartNotFoundError;
-        }
-        if(!currentCart.products.length){
-            throw new EmptyCartError;
         }
         return this.dao.removeFromCart(user.username,productsInfo[0].model);
     }

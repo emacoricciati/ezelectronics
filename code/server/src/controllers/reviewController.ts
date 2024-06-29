@@ -31,9 +31,9 @@ class ReviewController {
      * @returns A Promise that resolves to an array of ProductReview objects
      */
     async getProductReviews(model: string) :Promise<ProductReview[]> { 
-        // const productController = new ProductController();
-        // const products = await productController.getProducts('model',null,model);
-        return this.dao.getReviewsForAProduct(model/*products[0].model*/);
+        const productController = new ProductController();
+        const products = await productController.getProducts('model',null,model);
+        return this.dao.getReviewsForAProduct(products[0].model);
     }
 
     /**

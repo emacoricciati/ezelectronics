@@ -78,10 +78,6 @@ class ProductDAO {
                     reject(err)
                     return
                 }
-                if (!rows.length && type === 'model') {
-                    reject(new ProductNotFoundError)
-                    return
-                }
                 const products: Product[] = rows.map(row => {
                     return new Product(row.sellingPrice, row.model, row.category, row.arrivalDate, row.details, row.quantity);
                 })
